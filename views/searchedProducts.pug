@@ -1,0 +1,44 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title Searched Products
+        link(rel='stylesheet' href='css/bakeryProducts.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css', integrity='sha512-N4HpfmddGjBolnZIgFbT3f73pBG9FtDQYZjZn7vh0nvZd9k4Nrz/ScpUvQVTh0hmevStBxBS6Eh30pxZ6Lb0hQ==', crossorigin='anonymous' referrerpolicy='no-referrer')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet")
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+        script(src='/js/searchedProducts.js')
+        script(src='/js/search.js')
+        script(src='/js/cartCount.js')
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input#search-input.search-bar(type='text' placeholder='Search for products')
+                        button#search-button.search-button Search
+                        button#voice-search-button.search-button
+                            i(class='fa fa-microphone')
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Cart' style='width: 33px; height: 33px;')
+                        span.nav-text Cart
+                        span#cart-count(aria-live='polite') 0
+                    a(href='/myProfile')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' style='width: 33px; height: 33px;')
+                        span.nav-text My Profile
+
+        .container
+            h3.products-heading Search Results
+            .products-container
+                // Products will be injected here by the script

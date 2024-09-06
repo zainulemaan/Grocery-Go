@@ -1,0 +1,120 @@
+/* General Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  line-height: 1.6;
+  background-color: #f0f0f0;
+}
+
+.header {
+  background-color: #2ecc71;
+  padding: 10px 0;
+}
+
+.header .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  color: #fff;
+}
+
+.header .navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.header .navbar-left .site-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  background: url('/img/card-bg.jpg') center center/cover no-repeat;
+  padding: 20px;
+  border-radius: 8px;
+  color: #333;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-group input[type='text'],
+.form-group input[type='number'],
+.form-group input[type='date'],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group select {
+  appearance: none; /* Remove default appearance */
+  -webkit-appearance: none; /* Remove default appearance (Safari/Chrome) */
+  -moz-appearance: none; /* Remove default appearance (Firefox) */
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23444%"><path d="M7 10l5 5 5-5H7z"/></svg>'); /* Add custom arrow icon */
+  background-position: right 10px top 50%;
+  background-size: 18px;
+  background-repeat: no-repeat;
+  padding-right: 30px; /* Adjust padding for arrow icon */
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-group button.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #2ecc71;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.form-message {
+  display: none;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.form-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}

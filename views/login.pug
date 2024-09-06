@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Log In - GroceryGo
+    link(rel='stylesheet' href='/css/login.css')
+    link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+    script(src='/js/login.js')
+
+  body
+    .login-container
+      if message
+        .success-message(style='color: green;')= message
+      form#loginForm(action='/api/v1/users/login' method='POST' autocomplete='off')
+        h2 Log In
+        .form-group
+          input(type='email' id='email' name='email' placeholder='Email', required, autocomplete='new-password')
+          span.error-message#email-error(style='color: red;')
+        .form-group
+          input(type='password' id='password' name='password' placeholder='Password', required, autocomplete='new-password')
+          span.error-message#password-error(style='color: red;')
+        button(type='submit') Log In
+        p Don't have an account?
+          a(href='/signup') Sign Up
+        p Forgot your password?
+          a(href='/forgotPassword') Reset Password
+        .general-error-message(style='display: none; color: red;') Email or Password is incorrect
+        .success-message(style='display: none;')
+
+      
+

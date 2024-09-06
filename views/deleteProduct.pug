@@ -1,0 +1,110 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title Delete Product
+        link(rel='stylesheet' href='/css/deleteProduct.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet") 
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script.
+            $(document).ready(function() {
+                // Function to fetch products and populate dropdown
+                function fetchProductsAndPopulateDropdown() {
+                    $.ajax({
+                        url: '/api/v1/products',
+                        type: 'GET',
+                        success: function(response) {
+                            var products = response.data; //  response contains products array
+                            populateProductDropdown(products);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Failed to fetch products:', error);
+                        }
+                    });
+                }
+
+                // Populate product dropdown options
+                function populateProductDropdown(products) {
+                    var dropdown = $('#productId');
+                    dropdown.empty();
+                    dropdown.append('<option value="" selected disabled>Choose Product...</option>');
+
+                    // Checking if products is an array before iterating
+                    if (Array.isArray(products)) {
+                        products.forEach(function(product) {
+                            dropdown.append('<option value="' + product._id + '">' + product.name + '</option>');
+                        });
+                    } else {
+                        console.error('Products is not an array:', products);
+                        
+                    }
+                }
+
+                // Initially fetch and populate dropdown on page load
+                fetchProductsAndPopulateDropdown();
+
+                // AJAX form submission for deleting a product
+                $('#deleteForm').submit(function(event) {
+                    event.preventDefault(); // Prevent default form submission
+
+                    var productId = $('#productId').val(); // Get selected product ID
+
+                    $.ajax({
+                        url: '/api/v1/products/' + productId,
+                        type: 'DELETE', 
+                        success: function(response) {
+                            console.log(response); 
+
+                            if (response.status === 'success') {
+                                // Showing success message to user
+                                $('.form-message')
+                                    .text('Product deleted successfully!')
+                                    .css('color', 'green')
+                                    .show();
+                                // Re-fetching products and re-populate dropdown after deletion
+                                fetchProductsAndPopulateDropdown();
+                            } else {
+                                // Show error message to user if needed
+                                $('.form-message')
+                                    .text('Failed to delete product. Please try again.')
+                                    .css('color', 'red')
+                                    .show();
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText); 
+                            $('.form-message')
+                                .text('Failed to delete product. Please try again.')
+                                .css('color', 'red')
+                                .show();
+                        },
+                    });
+                });
+            });
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    span.site-name(class='minimal-font') GroceryGo
+
+        // Form Container
+        .form-container
+            .card
+                h1 Delete Product
+                form#deleteForm(method='DELETE')
+                    .form-group
+                        label(for='productId') Select Product:
+                        select#productId(name='productId' required)
+                            // Options will be populated dynamically via JavaScript
+
+                    .form-group
+                        button.btn(type='submit') Delete Product
+
+                // Element to display messages to the user
+                .form-message(style='display: none; font-weight: 600; margin-top: 10px;')

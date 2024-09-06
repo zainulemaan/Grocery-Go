@@ -1,0 +1,66 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo
+        link(rel='stylesheet' href='/css/dashboard.css')
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet") 
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+
+
+        // Dashboard Content
+        .dashboard-container
+            .card
+                h1 Dashboard
+                .buttons-container
+                    .button-row
+                        button.btn(onclick="window.location.href='/addProducts'") 
+                            img.btn-icon(src='/img/addproduct.png' alt='Add Product')
+                            span Add Product
+                        button.btn(onclick="window.location.href='/getallproducts'")
+
+                            img.btn-icon(src='/img/get.png' alt='Get All Products')
+                            span Get All Products
+                    .button-row
+                        button.btn(onclick="window.location.href='/getallproducts'")
+                            img.btn-icon(src='/img/update.png' alt='Update Product')
+                            span Update Product
+                        button.btn(onclick="window.location.href='/getallproducts'")
+                            img.btn-icon(src='/img/delete.png' alt='delete Product')
+                            span delete Product
+                    .button-row
+                        button.btn(onclick="window.location.href='/productStats'")
+                         
+                            img.btn-icon(src='/img/reviews.png' alt='Products Stats')
+                            span Products Stats
+                        button.btn(onclick="window.location.href='/getReviews'")
+                            img.btn-icon(src='/img/user.png' alt='Get Reviews By User')
+                            span Get All Reviews 
+                    .button-row
+                        button.btn(onclick="window.location.href='/adminOrders'")
+                            img.btn-icon(src='/img/orders.png' alt='Get Reviews By Product')
+                            span See Orders
+                        button.btn(onclick="window.location.href='/complaintsview'")
+                            img.btn-icon(src='/img/com.png' alt='Get Review')
+                            span Complaints
+
+    // Background Image
+    style.
+        body {
+           
+            background-size: cover;
+            opacity: 0.8;
+        }

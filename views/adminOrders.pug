@@ -1,0 +1,32 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title All Orders
+    link(rel='stylesheet' href='/css/adminOrders.css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js")
+  body
+    h1 All Orders
+
+    // Filtered Orders Sections
+    section
+      h2 Completed Orders
+      ul#completedOrders
+        // Each completed order will be inserted here by JavaScript
+
+    section
+      h2 Pending Orders
+      ul#pendingOrders
+        // Each pending order will be inserted here by JavaScript
+
+    section
+      h2 Canceled Orders
+      ul#canceledOrders
+        // Each canceled order will be inserted here by JavaScript
+
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+    script(src='/js/adminOrders.js')

@@ -1,0 +1,379 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title Update Product
+        link(rel='stylesheet' href='/css/update.css') 
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet") 
+
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script.
+            $(document).ready(function() {
+                // Function to fetch product details including brand and category
+                function fetchProductDetails(productId) {
+                    $.ajax({
+                        url: `/api/v1/products/${productId}`,
+                        type: 'GET',
+                        success: function(response) {
+                            var product = response.data.product;
+                            var brand = product.brand; 
+                            var category = product.category; 
+                            populateUpdateForm(product, brand, category);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Failed to fetch product details:', error);
+                        }
+                    });
+                }
+
+                // Function to populate update form with product details, brand, and category
+                function populateUpdateForm(product, brand, category) {
+                    // Set values in form fields
+                    $('#name').val(product.name);
+                    $('#description').val(product.description);
+                    $('#price').val(product.price);
+                    $('#discountPercentage').val(product.discountPercentage);
+                    $('#quantityAvailable').val(product.quantityAvailable);
+                    $('#brand').val(brand);
+                    $('#category').val(category);
+                }
+
+                // Retrieve product ID from query string
+                const urlParams = new URLSearchParams(window.location.search);
+                const productId = urlParams.get('id');
+
+                fetchProductDetails(productId);
+
+                // Function to validate form fields
+                function validateField(selector, condition, message) {
+                    $(selector).on('input change', function () {
+                        if (condition($(this).val())) {
+                            $(this).css('border-color', 'red');
+                            $(this).next('.error-message').text(message).show();
+                        } else {
+                            $(this).css('border-color', '');
+                            $(this).next('.error-message').hide();
+                        }
+                    });
+                }
+
+                // Validate Product Name
+                validateField('#name', (val) => val.trim() === '', 'Product name is required.');
+
+                // Validate Brand
+                validateField('#brand', (val) => val.trim() === '', 'Brand is required.');
+
+                // Validate Price
+                validateField('#price', (val) => val <= 0, 'Price must be greater than zero.');
+
+                // Validate Category
+                validateField('#category', (val) => val.trim() === '', 'Category is required.');
+
+                // Validate Discount Percentage
+                validateField('#discountPercentage', (val) => val < 0 || val > 100, 'Discount must be between 0 and 100.');
+                
+                validateField('#quantityAvailable', (val) => val <= 0, 'Quantity must be greater than zero.');
+
+                // Validate Photo
+                function validatePhoto() {
+                    if ($('#photo')[0].files.length === 0) {
+                        $('#photo').css('border-color', 'red');
+                        $('#photo').next('.error-message').text('Photo is required.').show();
+                        return false;
+                    } else {
+                        $('#photo').css('border-color', '');
+                        $('#photo').next('.error-message').hide();
+                        return true;
+                    }
+                }
+
+                $('#photo').on('change', validatePhoto);
+
+                // Function to check if there are any validation errors
+                function hasValidationErrors() {
+                    let hasError = false;
+                    $('input, select, textarea').each(function () {
+                        if ($(this).css('border-color') === 'red') {
+                            hasError = true;
+                            return false; // Exit loop if error found
+                        }
+                    });
+                    if (!validatePhoto()) {
+                        hasError = true;
+                    }
+                    return hasError;
+                }
+
+                // AJAX form submission for updating a product
+                $('#updateForm').submit(function(event) {
+                    event.preventDefault(); 
+
+                    // Checking if there are any validation errors
+                    if (hasValidationErrors()) {
+                        $('#updateMessage').text('Please fix the errors in the form before submitting.').css('color', 'red').show();
+                        return; // Stop the form submission
+                    }
+
+                    var formData = new FormData(this); // Create FormData object to send form data including files
+
+                    // Send AJAX request to update product
+                    $.ajax({
+                        url: `/api/v1/products/${productId}`,
+                        type: 'PATCH', 
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            console.log('Product updated successfully:', response);
+
+                            // Show success message
+                            $('#updateMessage').text('Product updated successfully!').css('color', 'green').show();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Failed to update product:', error);
+
+                            // Showing error message 
+                            $('#updateMessage').text('Failed to update product. Please try again.').css('color', 'red').show();
+                        }
+                    });
+                });
+            });
+    body
+        header.header
+            nav.navbar
+                .navbar-left
+                    span.site-name(class='minimal-font') GroceryGo
+                .navbar-right
+                    button.navbar-button(type='button' onclick="window.location.href='/getallproducts'") Back
+                    button.navbar-button(type='button' onclick="window.location.href='/dashboard'") Dashboard
+        // Update Form Container
+        .form-container
+            .card
+                h1 Update Product
+                form#updateForm(action=`/api/v1/products/${productId}`, method='POST' enctype='multipart/form-data')
+                    .form-group
+                        label(for='name') Name:
+                        input#name.form-control(type='text' name='name', required)
+                        span.error-message(style='display: none;')
+                    .form-group
+                        label(for='description') Description:
+                        textarea#description.form-control(name='description' rows='4', required)
+                        span.error-message(style='display: none;')
+                    .form-group
+                        label(for='price') Price:
+                        input#price.form-control(type='number' name='price', required)
+                        span.error-message(style='display: none;')
+                    .form-group
+                        label(for='discountPercentage') Discount Percentage:
+                        input#discountPercentage.form-control(type='number' name='discountPercentage', required)
+                        span.error-message(style='display: none;')
+                    .form-group
+                        label(for='quantityAvailable') Quantity Available:
+                        input#quantityAvailable.form-control(type='number' name='quantityAvailable', required)
+                        span.error-message(style='display: none;')
+                    
+                    .form-group
+                        label(for='brand') Brand:
+                        input#brand.form-control(type='text' name='brand', required)
+                        span.error-message(style='display: none;')
+                    .form-group
+                        label(for='category') Category:
+                        input#category.form-control(type='text' name='category', required)
+                        span.error-message(style='display: none;')
+                    .form-group
+                        label(for='photo') Photo:
+                        input#photo.form-control(type='file' name='photo', required)
+                        span.error-message(style='display: none;')
+                    .form-group
+                        button#submitBtn.btn(type='submit') Update Product
+                    #updateMessage(style='display: none;')
+
+
+//- doctype html
+//- html
+//-     head
+//-         meta(charset='UTF-8')
+//-         meta(name='viewport' content='width=device-width, initial-scale=1.0')
+//-         title Update Product
+//-         link(rel='stylesheet' href='/css/update.css') 
+//-         link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+//-         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+//-         link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+//-         link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet") 
+
+//-         script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+//-         script.
+//-             $(document).ready(function() {
+//-                 // Function to fetch product details including brand and category
+//-                 function fetchProductDetails(productId) {
+//-                     $.ajax({
+//-                         url: `/api/v1/products/${productId}`,
+//-                         type: 'GET',
+//-                         success: function(response) {
+//-                             var product = response.data.product;
+//-                             var brand = product.brand; 
+//-                             var category = product.category; 
+//-                             populateUpdateForm(product, brand, category);
+//-                         },
+//-                         error: function(xhr, status, error) {
+//-                             console.error('Failed to fetch product details:', error);
+//-                         }
+//-                     });
+//-                 }
+
+//-                 // Function to populate update form with product details, brand, and category
+//-                 function populateUpdateForm(product, brand, category) {
+//-                     // Set values in form fields
+//-                     $('#name').val(product.name);
+//-                     $('#description').val(product.description);
+//-                     $('#price').val(product.price);
+//-                     $('#discountPercentage').val(product.discountPercentage);
+//-                     $('#brand').val(brand);
+//-                     $('#category').val(category);
+//-                 }
+
+//-                 // Retrieve product ID from query string
+//-                 const urlParams = new URLSearchParams(window.location.search);
+//-                 const productId = urlParams.get('id');
+
+//-                 fetchProductDetails(productId);
+
+//-                 // Function to validate form fields
+//-                 function validateField(selector, condition, message) {
+//-                     $(selector).on('input change', function () {
+//-                         if (condition($(this).val())) {
+//-                             $(this).css('border-color', 'red');
+//-                             $(this).next('.error-message').text(message).show();
+//-                         } else {
+//-                             $(this).css('border-color', '');
+//-                             $(this).next('.error-message').hide();
+//-                         }
+//-                     });
+//-                 }
+
+//-                 // Validate Product Name
+//-                 validateField('#name', (val) => val.trim() === '', 'Product name is required.');
+
+//-                 // Validate Brand
+//-                 validateField('#brand', (val) => val.trim() === '', 'Brand is required.');
+
+//-                 // Validate Price
+//-                 validateField('#price', (val) => val <= 0, 'Price must be greater than zero.');
+
+//-                 // Validate Category
+//-                 validateField('#category', (val) => val.trim() === '', 'Category is required.');
+
+//-                 // Validate Discount Percentage
+//-                 validateField('#discountPercentage', (val) => val < 0 || val > 100, 'Discount must be between 0 and 100.');
+
+//-                 // Validate Photo
+//-                 function validatePhoto() {
+//-                     if ($('#photo')[0].files.length === 0) {
+//-                         $('#photo').css('border-color', 'red');
+//-                         $('#photo').next('.error-message').text('Photo is required.').show();
+//-                         return false;
+//-                     } else {
+//-                         $('#photo').css('border-color', '');
+//-                         $('#photo').next('.error-message').hide();
+//-                         return true;
+//-                     }
+//-                 }
+
+//-                 $('#photo').on('change', validatePhoto);
+
+//-                 // AJAX form submission for updating a product
+//-                 $('#updateForm').submit(function(event) {
+//-                     event.preventDefault(); 
+
+//-                     // Checking if there are any validation errors
+//-                     let hasError = false;
+//-                     $('input, select, textarea').each(function () {
+//-                         if ($(this).css('border-color') === 'red') {
+//-                             hasError = true;
+//-                             return false; 
+//-                         }
+//-                     });
+
+//-                     if (!validatePhoto()) {
+//-                         hasError = true;
+//-                     }
+
+//-                     if (hasError) {
+//-                         $('#updateMessage').text('Please fix the errors in the form before submitting.').css('color', 'red').show();
+//-                         return; // Stop the form submission
+//-                     }
+
+//-                     var formData = new FormData(this); // Create FormData object to send form data including files
+
+//-                     // Send AJAX request to update product
+//-                     $.ajax({
+//-                         url: `/api/v1/products/${productId}`,
+//-                         type: 'PATCH', 
+//-                         data: formData,
+//-                         contentType: false,
+//-                         processData: false,
+//-                         success: function(response) {
+//-                             console.log('Product updated successfully:', response);
+
+//-                             // Show success message
+//-                             $('#updateMessage').text('Product updated successfully!').css('color', 'green').show();
+
+                            
+//-                         },
+//-                         error: function(xhr, status, error) {
+//-                             console.error('Failed to update product:', error);
+
+//-                             // Showing error message 
+//-                             $('#updateMessage').text('Failed to update product. Please try again.').css('color', 'red').show();
+//-                         }
+//-                     });
+//-                 });
+//-             });
+//-     body
+//-         header.header
+//-             nav.navbar
+//-                 .navbar-left
+//-                     span.site-name(class='minimal-font') GroceryGo
+//-                 .navbar-right
+//-                     button.navbar-button(type='button' onclick="window.location.href='/getallproducts'") Back
+//-                     button.navbar-button(type='button' onclick="window.location.href='/dashboard'") Dashboard
+//-         // Update Form Container
+//-         .form-container
+//-             .card
+//-                 h1 Update Product
+//-                 form#updateForm(action=`/api/v1/products/${productId}`, method='POST' enctype='multipart/form-data')
+//-                     .form-group
+//-                         label(for='name') Name:
+//-                         input#name.form-control(type='text' name='name', required)
+//-                         span.error-message
+//-                     .form-group
+//-                         label(for='description') Description:
+//-                         textarea#description.form-control(name='description' rows='4', required)
+//-                         span.error-message
+//-                     .form-group
+//-                         label(for='price') Price:
+//-                         input#price.form-control(type='number' name='price', required)
+//-                         span.error-message
+//-                     .form-group
+//-                         label(for='discountPercentage') Discount Percentage:
+//-                         input#discountPercentage.form-control(type='number' name='discountPercentage', required)
+//-                         span.error-message
+//-                     .form-group
+//-                         label(for='brand') Brand:
+//-                         input#brand.form-control(type='text' name='brand', required)
+//-                         span.error-message
+//-                     .form-group
+//-                         label(for='category') Category:
+//-                         input#category.form-control(type='text' name='category', required)
+//-                         span.error-message
+//-                     .form-group
+//-                         label(for='photo') Photo:
+//-                         input#photo.form-control(type='file' name='photo', required)
+//-                         span.error-message
+//-                     .form-group
+//-                         button#submitBtn.btn(type='submit') Update Product
+//-                     #updateMessage.error-message

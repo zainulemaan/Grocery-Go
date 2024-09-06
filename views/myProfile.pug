@@ -1,0 +1,181 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo - FAQs
+        link(rel='stylesheet' href='/css/profile.css') 
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet")
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+        script(src='/js/search.js')
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input#search-input.search-bar(type='text' placeholder='Search for products')
+                        button#search-button.search-button Search
+                        button#voice-search-button.search-button
+                            i(class='fa fa-microphone')
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Wishlist' class='nav-icon')
+                        span.nav-text Cart
+                    a(href='/myProfile')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text Sign Up
+
+        // Profile Content
+        .profile-card
+            .profile-icon
+                img(src='/img/profile.png' alt='Profile Icon')
+            .profile-info
+                h2 User Profile
+                p.profile-name
+                p.profile-email
+            .buttons
+                a(href='/orders') View Current Orders
+                button#logout-btn Logout
+                a(href='/orderhistory') Order History
+                a(href='/updatepassword') Change Passowrd
+                
+                
+            
+
+    // JavaScript
+    script.
+        $(document).ready(function() {
+            // Fetch JWT from cookies
+            const token = document.cookie.split('; ').find(row => row.startsWith('jwt='));
+            if (token) {
+                const jwtToken = token.split('=')[1];
+
+                // Decode JWT to get userId
+                const decoded = JSON.parse(atob(jwtToken.split('.')[1]));
+                const userId = decoded.id;
+
+                // Fetch user profile data from the server
+                $.ajax({
+                    url: `/api/v1/users/${userId}/MyProfile`,
+                    method: 'GET',
+                    success: function(response) {
+                        const { name, email } = response.data;
+                        $('.profile-name').text(name);
+                        $('.profile-email').text(email);
+                    },
+                    error: function(error) {
+                        console.error('Error fetching user profile:', error);
+                    }
+                });
+            } else {
+                console.error('No token found in cookies.');
+            }
+
+            // Logout functionality
+            $('#logout-btn').click(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/api/v1/users/logout',
+                    method: 'POST',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Redirect to login page after 3 seconds
+                            setTimeout(function() {
+                                window.location.href = '/login';
+                            }, 3000);
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error logging out:', error);
+                    }
+                });
+            });
+        });
+
+//- doctype html
+//- html
+//-     head
+//-         meta(charset='UTF-8')
+//-         meta(name='viewport' content='width=device-width, initial-scale=1.0')
+//-         title GroceryGo - FAQs
+//-         link(rel='stylesheet' href='/css/profile.css') 
+//-         link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+//-         link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+//-         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+//-         link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+//-         link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet")
+//-         script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+//-         script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+//-         script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+
+//-     body
+//-         // Header
+//-         header.header
+//-             nav.navbar
+//-                 .navbar-left
+//-                     a(href='/')
+//-                         img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+//-                 .navbar-center
+//-                     form.search-form
+//-                         input.search-bar(type='text' placeholder='Search for products')
+//-                         button.search-button Search
+//-                 .navbar-right
+//-                     a(href='/getCart')
+//-                         img.nav-icon(src='/img/wishlist.png' alt='Wishlist' class='nav-icon')
+//-                         span.nav-text Cart
+//-                     a(href='/myProfile')
+//-                         img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+//-                         span.nav-text Sign Up
+
+//-         // Profile Content
+//-         .profile-card
+//-             .profile-icon
+//-                  img(src='/img/profile.png' alt='Profile Icon')
+//-             .profile-info
+//-                h2 User Profile
+//-                p.profile-name
+//-                p.profile-email
+//-             .buttons
+//-                a(href='/orderSuccessfull') View Orders
+//-                a(href='/logout') Logout
+
+//-     // JavaScript
+//-     script.
+//-       $(document).ready(function() {
+//-         // Fetch JWT from cookies
+//-         const token = document.cookie.split('; ').find(row => row.startsWith('jwt='));
+//-         if (token) {
+//-           const jwtToken = token.split('=')[1];
+
+//-           // Decode JWT to get userId
+//-           const decoded = JSON.parse(atob(jwtToken.split('.')[1]));
+//-           const userId = decoded.id;
+
+//-           // Fetch user profile data from the server
+//-           $.ajax({
+//-             url: `/api/v1/users/${userId}/MyProfile`,
+//-             method: 'GET',
+//-             success: function(response) {
+//-               const { name, email } = response.data;
+//-               $('.profile-name').text(name);
+//-               $('.profile-email').text(email);
+//-             },
+//-             error: function(error) {
+//-               console.error('Error fetching user profile:', error);
+//-             }
+//-           });
+//-         } else {
+//-           console.error('No token found in cookies.');
+//-         }
+//-       });

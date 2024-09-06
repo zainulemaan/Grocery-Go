@@ -1,0 +1,27 @@
+[
+  {
+    "id": 0,
+    "name": "Apples",
+    "description": "Fresh and juicy apples from the orchard",
+    "price": 2.99
+  },
+  {
+    "id": 1,
+    "name": "Milk",
+    "description": "Organic whole milk from local farms",
+    "price": 3.49
+  },
+  {
+    "id": 2,
+    "name": "Bread",
+    "description": "Artisanal whole wheat bread, freshly baked daily",
+    "price": 4.99
+  },
+  {
+    "id": 3,
+    "name": "Eggs",
+    "description": "Farm-fresh organic eggs from free-range chickens",
+    "price": 1.99
+  },
+  { "id": 4, "name": "Apple", "price": 2.5, "unit": "kg" }
+]

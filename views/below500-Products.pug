@@ -1,0 +1,156 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo - Below 1000 PKR
+        link(rel='stylesheet' href='/css/bakeryProducts.css')
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet")
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+        script(src='/js/search.js')
+        script(src='/js/cartCount.js')
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input#search-input.search-bar(type='text' placeholder='Search for products')
+                        button#search-button.search-button Search
+                        button#voice-search-button.search-button
+                            i(class='fa fa-microphone')
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Wishlist' class='nav-icon')
+                        span.nav-text Cart
+                        span#cart-count(aria-live='polite') 0
+                    a(href='/myProfile')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text Sign Up
+
+        // Categories bar
+        .categories-bar
+            .categories-left
+                h3 Shop By Categories
+
+            .category-icons
+                // Your category items here...
+
+        // Products below 1000 PKR section
+        h3.products-heading Below 1000 PKR Products
+
+        .products-container
+            // Product cards will be dynamically added here using JavaScript
+
+        script.
+            $(document).ready(function() {
+                function fetchProducts() {
+                    $.ajax({
+                        url: '/api/v1/products/below500-Products',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                // Iterate through each category of products
+                                response.data.below500.forEach(function(categoryProducts) {
+                                    // Iterate through products in each category
+                                    categoryProducts.products.forEach(function(product) {
+                                        // Append product card HTML to .products-container
+                                        var productCard = `
+                                            <div class="product-card">
+                                                <img class="product-image" src="/img/products/${product.photo}" alt="${product.name}">
+                                                <div class="product-details">
+                                                    <h3 class="product-name">${product.name}</h3>
+                                                    <div class="quantity">(${product.quantity})</div>
+                                                    <div class="price">
+                                                        <div class="original-price1">PKR ${product.price}</div>
+                                                    </div>
+                                                    <button class="add-to-cart" data-product-id="${product._id}">Add to Cart</button>
+                                                </div>
+                                            </div>
+                                        `;
+                                        $('.products-container').append(productCard);
+                                    });
+                                });
+                            } else {
+                                console.error('Failed to fetch products:', response.message);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching products:', error);
+                        }
+                    });
+                }
+
+                // Function to get JWT cookie
+                function getCookie(name) {
+                    const cookieString = RegExp('' + name + '=([^;]*)').exec(document.cookie);
+                    return cookieString ? cookieString[1] : null;
+                }
+
+                // Fetch products on page load
+                fetchProducts();
+
+                // Event listener for add to cart button
+                $('.products-container').on('click', '.add-to-cart', function() {
+                    const productId = $(this).data('product-id');
+                    const jwtCookie = getCookie('jwt');
+
+                    if (!jwtCookie) {
+                        console.error('JWT not found in cookie.');
+                        return;
+                    }
+
+                    const userId = getUserIdFromJwt(jwtCookie); // Extract userId from JWT
+
+                    if (!userId) {
+                        console.error('User ID not found in JWT.');
+                        return;
+                    }
+
+                    // API request to add product to cart
+                    $.ajax({
+                        url: `/api/v1/cart/${userId}/addToCart`,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': `Bearer ${jwtCookie}`
+                        },
+                        data: JSON.stringify({ productId, productQuantity: 1 }),
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                console.log('Product added to cart successfully!');
+                                // Handle success message or action
+                            } else {
+                                console.error('Failed to add product to cart:', response.error);
+                                // Handle failure message or action
+                            }
+                        },
+                        error: function(xhr) {
+                            console.error('Error adding product to cart:', xhr);
+                            // Handle error message or action
+                        }
+                    });
+                });
+
+                // Function to extract userId from JWT
+                function getUserIdFromJwt(jwt) {
+                    try {
+                        const decoded = jwt_decode(jwt);
+                        return decoded.id;
+                    } catch (error) {
+                        console.error('Error decoding JWT:', error);
+                        return null;
+                    }
+                }
+            });

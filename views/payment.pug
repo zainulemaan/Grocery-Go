@@ -1,0 +1,105 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Confirm Order
+    script(src="https://js.squareup.com/v2/paymentform")
+    style.
+      /* Add your CSS styles here */
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .form-group button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .form-group button:hover {
+        background-color: #0056b3;
+      }
+  body
+    .container
+      h1 Confirm Your Order
+      form(id="payment-form", method="POST", action="/api/v1/${userId}/placeOrder")
+        .form-group
+          label(for="address") Address:
+          input(type="text", id="address", name="address", required)
+        .form-group
+          label(for="phoneNumber") Phone Number:
+          input(type="text", id="phoneNumber", name="phoneNumber", required)
+        .form-group
+          label(for="card-element") Credit or Debit Card:
+          div(id="card-element")  <!-- Placeholder for Square's card input field -->
+        .form-group
+          button(type="submit") Pay Now
+
+    script.
+      // Initialize Square payment form
+      const paymentForm = new SqPaymentForm({
+        applicationId: 'sandbox-sq0idb-gaLVg8YZK5mhVO9EERITtQ', // Replace with your Square application ID
+        inputClass: 'sq-input',
+        autoBuild: false,
+        inputStyles: [{
+          fontSize: '.9em',
+          padding: '.5em',
+          color: '#32325d',
+          backgroundColor: 'white',
+          placeholderColor: '#aab7c4'
+        }],
+        card: {
+          elementId: 'card-element',
+          placeholder: 'Card Number'
+        },
+        callbacks: {
+          cardTokenizeResponseReceived: function (errors, token) {
+            if (errors) {
+              console.error('Encountered errors:', errors);
+              return;
+            }
+            // Handle the response here
+            const form = document.getElementById('payment-form');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'paymentToken');
+            hiddenInput.setAttribute('value', token.tokenId);
+            form.appendChild(hiddenInput);
+            form.submit();
+          }
+        }
+      });
+
+      // Build the form
+      paymentForm.build();
+
+      document.getElementById('payment-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        paymentForm.requestCardNonce();
+      });

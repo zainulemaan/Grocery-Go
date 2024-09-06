@@ -1,0 +1,173 @@
+/* Body styling */
+body,
+html,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  position: relative;
+  background-color: #f8f9fa;
+}
+
+.header {
+  width: 100%;
+  background-color: black;
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  color: black;
+}
+
+.navbar-left,
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo {
+  width: 150px;
+  height: auto;
+}
+
+/* Keyframes for the spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.navbar-left a img.nav-logo {
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease;
+}
+
+.navbar-left a:hover img.nav-logo {
+  animation: spin 0.6s; /* Apply the spin animation */
+  transform: scale(1.1); /* Slightly increase the size */
+  filter: brightness(1.2) contrast(1.2) saturate(1.5); /* Adjust color on hover */
+}
+
+.navbar-center {
+  margin-right: 190px;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.navbar-right .nav-icon {
+  font-size: 1.5em;
+  color: rgba(67, 242, 67, 0.885);
+  margin-left: 15px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.navbar-right .nav-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.navbar-right .nav-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2em;
+  color: black;
+}
+
+.container {
+  font-family: 'Space Grotesk', sans-serif;
+  width: 80%;
+  margin: 20px auto;
+}
+
+.review-card {
+  font-family: 'Space Grotesk', sans-serif;
+  margin-top: 30px;
+  background-color: #fff;
+  border-radius: 3px;
+  border: 5px solid;
+  border-image: linear-gradient(to right, #46faf1, #f358f8);
+  border-image-slice: 1;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  margin-bottom: 20px;
+  padding: 90px;
+  overflow: hidden;
+  position: relative;
+}
+
+.review-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.2em;
+}
+
+.review-card p {
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.review-card .rating {
+  font-weight: 600;
+  font-weight: bold;
+  color: #ff9800;
+}
+
+.review-card .delete-btn {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  margin-top: 300px;
+  background-color: #e57373;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 0.9em;
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  transition: background-color 0.3s;
+}
+
+.review-card .delete-btn:hover {
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: #c62828;
+}
+
+footer.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+}

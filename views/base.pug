@@ -1,0 +1,288 @@
+
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo
+        link(rel='stylesheet' href='css/products.css')
+        link(rel='shortcut icon' type='image/png' href='img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css', integrity='sha512-N4HpfmddGjBolnZIgFbT3f73pBG9FtDQYZjZn7vh0nvZd9k4Nrz/ScpUvQVTh0hmevStBxBS6Eh30pxZ6Lb0hQ==', crossorigin='anonymous' referrerpolicy='no-referrer')
+
+
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet") 
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script.
+            $(document).ready(function() {
+                function fetchProducts(category) {
+                    $.ajax({
+                        url: `/api/v1/products/${category}`,
+                        method: 'GET',
+                        success: function(response) {
+                            window.location.href = `/products?category=${category}`;
+                        },
+                        error: function(error) {
+                            console.error('Error fetching products:', error);
+                        }
+                    });
+                }
+
+                $('.category-item').on('click', function() {
+                    const category = $(this).find('span').text().toLowerCase();
+                    fetchProducts(category);
+                });
+
+                $('.slider-item').on('click', function() {
+                    const category = $(this).find('p').text().toLowerCase();
+                    fetchProducts(category);
+                });
+            });
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input.search-bar(type='text' placeholder='Search for products')
+                        button.search-button Search
+                .navbar-right
+                    a(href='/signup ')
+                        img.nav-icon(src='/img/wishlist.png' alt='Cart' style='width: 33px; height: 33px;')
+                        span.nav-text Cart
+                        span#cart-count(aria-live='polite') 0
+                    a(href='/signup')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' style='width: 33px; height: 33px;')
+                        span.nav-text Sign Up
+
+        // Categories bar
+        .categories-bar
+            .categories-left
+                h3 Shop By Categories
+
+            .category-icons
+                .category-item
+                    i.fa.fa-utensils
+                    span Vegetables
+                    script.
+                        $(document).on('click', '.category-item:contains("Vegetables")', function() {
+                            window.location.href = '/fruits-vegetables-Products';
+                        });
+                .category-item
+                    i.fa.fa-apple-alt
+                    span Fruits
+                    script.
+                        $(document).on('click', '.category-item:contains("Vegetables")', function() {
+                            window.location.href = '/fruits-vegetables-Products';
+                        });
+                .category-item
+                    i.fa.fa-bread-slice
+                    span Breakfast
+                    script.
+                        $(document).on('click', '.category-item:contains("BreakFast")', function() {
+                            window.location.href = '/breakfast-Products';
+                        });
+                .category-item
+                    i.fa.fa-concierge-bell
+                    span Dinner
+                    script.
+                        $(document).on('click', '.category-item:contains("BreakFast")', function() {
+                            window.location.href = '/breakfast-Products';
+                        });
+                .category-item
+                    i.fa.fa-drumstick-bite
+                    span Meat
+                    script.
+                        $(document).on('click', '.category-item:contains("Meat")', function() {
+                            window.location.href = '/Meat-Seafood-Products';
+                        });
+                .category-item
+                    i.fa.fa-fish
+                    span SeaFood
+                    script.
+                        $(document).on('click', '.category-item:contains("Meat")', function() {
+                            window.location.href = '/Meat-Seafood-Products';
+                        });
+                .category-item
+                    i.fa.fa-cookie
+                    span Snacks
+                    script.
+                        $(document).on('click', '.category-item:contains("Snacks")', function() {
+                            window.location.href = '/Snacks-Products';
+                        });
+                .category-item
+                    i.fa.fa-glass-martini-alt
+                    span ColdDrinks
+                    script.
+                        $(document).on('click', '.category-item:contains("Snacks")', function() {
+                            window.location.href = '/Snacks-Products';
+                        });
+                .category-item
+                    i.fa.fa-baby-carriage
+                    span BabyCare
+                    script.
+                        $(document).on('click', '.category-item:contains("Baby Care")', function() {
+                            window.location.href = '/Babycare-Products';
+                        });
+                .category-item
+                    i.fa.fa-paw
+                    span PetCare
+                    script.
+                        $(document).on('click', '.category-item:contains("Pet Care")', function() {
+                            window.location.href = '/Petcare-Products';
+                        });
+                .category-item
+                    i.fa.fa-pen
+                    span Stationary
+                    script.
+                        $(document).on('click', '.category-item:contains("Stationary")', function() {
+                            window.location.href = '/Stationery-Products';
+                        }); 
+                .category-item
+                    i.fa.fa-birthday-cake
+                    span Bakery
+                    script.
+                        $(document).on('click', '.category-item:contains("Bakery")', function() {
+                            window.location.href = '/bakery-dairy-Products';
+                        });
+
+        // Hero Section
+        .hero-section
+            .hero-content
+                h1.hero-title Welcome to GroceryGo
+                p.hero-subtitle Your ultimate grocery shopping experience
+                a.hero-button(href="#") Shop Now 
+
+        // Slider for grocery items
+        .slider-container
+            h3 Browse Categories
+            .slider
+                .slider-item
+                    img(src='/img/vegetables.jpg' alt='Vegetables')
+                    p Vegetables And Fruits
+                    script.
+                        $(document).on('click', '.slider-item:contains("Vegetables Products")', function() {
+                            window.location.href = '/fruits-vegetables-Products';
+                        });
+                .slider-item
+                    img(src='/img/breakfast.jpg' alt='Breakfast')
+                    p Breakfast
+                    script.
+                        $(document).on('click', '.slider-item:contains("BreakFast Products")', function() {
+                            window.location.href = '/breakfast-Products';
+                        });
+                .slider-item
+                    img(src='/img/Meat.jpg' alt='Meat')
+                    p Meat
+                    script.
+                        $(document).on('click', '.slider-item:contains("Meat Products")', function() {
+                            window.location.href = '/Meat-Seafood-Products';
+                        });
+                .slider-item
+                    img(src='/img/Snacks.jpg' alt='Snacks')
+                    p Snacks
+                    script.
+                        $(document).on('click', '.slider-item:contains("Snacks Products")', function() {
+                            window.location.href = '/Snacks-Products';
+                        });
+                .slider-item
+                    img(src='/img/Baby.jpg' alt='Baby')
+                    p Baby Care
+                    script.
+                        $(document).on('click', '.slider-item:contains("Babycare Products")', function() {
+                            window.location.href = '/Babycare-Products';
+                        });
+                .slider-item
+                    img(src='/img/Pet.jpg' alt='Pet')
+                    p Pet Care
+                    script.
+                        $(document).on('click', '.slider-item:contains("Petcare Products")', function() {
+                            window.location.href = '/Petcare-Products';
+                        });
+                .slider-item
+                    img(src='/img/Stationery.jpg' alt='Stationery')
+                    p Stationery
+                    script.
+                        $(document).on('click', '.slider-item:contains("Stationery Products")', function() {
+                            window.location.href = '/Stationery-Products';
+                        });
+                .slider-item
+                    img(src='/img/Bakery.jpg' alt='Bakery')
+                    p Bakery Products
+                    script.
+                        $(document).on('click', '.slider-item:contains("Bakery Products")', function() {
+                            window.location.href = '/bakery-dairy-Products';
+                        });
+
+        // Hero Section 1
+        .hero-section1
+            .hero-content1
+                h1.hero-title1 GroceryGo Summer Sale!
+                p.hero-subtitle1 Save Big Today!
+                a.hero-button1(href="#") Shop Now 
+
+        // Rectangle Box Section
+        .rectangle-box
+            .left-box
+                p Get The products Below 1000 PKR
+                p IN STOCK
+                button.explore-button 
+                    a(href='/below500-Products') Explore Now
+            .right-box 
+                a(href='/')
+                    img.nav-logo(src='/img/happy.png' alt='HappyLogo Logo')
+                // Rectangle Box Section
+
+            .right-box1
+                p Signup on GroceryGo to see the products. 
+                p Order now so you dont miss the opportunities.
+                p Your order will arrive at your door in 30 minutes.
+
+        // Horizontal Strip Section
+        .horizontal-strip
+            .icon-box
+                i.fa.fa-truck
+                p Fast Delivery
+            .icon-box
+                i.fa.fa-tags
+                p Best Prices
+            .icon-box
+                i.fa.fa-headset
+                p 24/7 Support
+            .icon-box
+                i.fa.fa-star
+                p High Quality
+        // Footer Section
+        footer.footer
+            .footer-container
+                .footer-left
+                    h4 Contact Details
+                    p Address: 123 Grocery St, Freshville, FG 12345
+                    p Phone: (123) 456-7890
+                    p Email: contact@grocerygo.com
+                .footer-center
+                    h4 Customer Services
+                    ul
+                        li
+                            a(href='#') Delivery Info
+                        li
+                            a(href='#') FAQs
+                .footer-right
+                    h4 Connect with Us
+                    .social-icons
+                        a(href='#')
+                            i.fab.fa-facebook-f.social-icon(style="color: #4267B2")
+                        a(href='#')
+                            i.fab.fa-youtube.social-icon(style="color: #FF0000")
+                        a(href='#')
+                            i.fab.fa-instagram.social-icon(style="color: #E4405F")
+                        a(href='#')
+                            i.fab.fa-twitter.social-icon(style="color: #1DA1F2")
+            .footer-bottom
+                p © 2024 GroceryGo. All rights reserved.

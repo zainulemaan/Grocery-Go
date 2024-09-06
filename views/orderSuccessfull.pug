@@ -1,0 +1,238 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title GroceryGo - Order Success
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300i,700")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap")
+        link(rel="stylesheet" href="/css/ordersuccessfull.css")
+        script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+        script(src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js")
+        script.
+            $(document).ready(function() {
+                function getCookie(name) {
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; ${name}=`);
+                    if (parts.length === 2) return parts.pop().split(';').shift();
+                }
+
+                function showCancelMessage(orderCard) {
+                    orderCard.find('.order-cancel-message').remove(); // Remove any existing cancel message
+                    orderCard.append('<p class="order-cancel-message">Your order has been canceled.</p>');
+                    // Optionally hide the message after a delay
+                    setTimeout(() => {
+                        orderCard.find('.order-cancel-message').remove();
+                    }, 5000); // Hide message after 5 seconds
+                }
+
+                function startCountdown(duration, display) {
+                    var timer = duration, hours, minutes, seconds;
+                    var interval = setInterval(function () {
+                        hours = parseInt(timer / 3600, 10);
+                        minutes = parseInt((timer % 3600) / 60, 10);
+                        seconds = parseInt(timer % 60, 10);
+
+                        hours = hours < 10 ? "0" + hours : hours;
+                        minutes = minutes < 10 ? "0" + minutes : minutes;
+                        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                        display.text(hours + ":" + minutes + ":" + seconds);
+
+                        if (--timer < 0) {
+                            clearInterval(interval);
+                            display.text("00:00:00"); 
+                        }
+                    }, 1000);
+                }
+
+                var thirtyMinutes = 60 * 30,
+                    display = $('#timer');
+                startCountdown(thirtyMinutes, display);
+
+                $('#view-order-button').click(function() {
+                    const token = getCookie('jwt');
+
+                    if (token) {
+                        try {
+                            const decoded = jwt_decode(token);
+                            const userId = decoded.id;
+
+                            $.ajax({
+                                url: `/api/v1/order/${userId}`,
+                                method: 'GET',
+                                success: function(response) {
+                                    $('#order-details').empty();
+
+                                
+                                    
+                                    
+                                   
+                                    
+                                    response.data.orders.forEach(order => {
+                                        if (order.status === 'pending') {
+                                            $('#order-details').append(`
+                                                <div class="order-card" data-id="${order._id}">
+                                                    <h3>Order ID: ${order._id}</h3>
+                                                    <p><strong>Address:</strong> ${order.address}</p>
+                                                    <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
+                                                    <p><strong>Subtotal:</strong> PKR ${order.subTotal}</p>
+                                                    <h4>Items:</h4>
+                                                    <ul>
+                                                        ${order.items.map(item => `
+                                                            <li>
+                                                                ${item.productName} - ${item.productQuantity} x PKR ${item.productPrice} (Discount: ${item.discountPercentage}%)
+                                                            </li>
+                                                        `).join('')}
+                                                    </ul>
+                                                    <button class="cancel-order-btn" data-id="${order._id}">Cancel Order</button>
+                                                    <button class="received-order-btn" data-id="${order._id}">Order Received</button>
+                                                </div>
+                                            `);
+                                        }
+                                    });
+                                    
+                                    
+                                    $('#order-details').show();
+                                    $('.card').hide(); // Hide other content
+                                },
+                                error: function(xhr) {
+                                    console.error('Failed to fetch order details:', xhr.responseText);
+                                }
+                            });
+                        } catch (e) {
+                            console.error('Failed to decode JWT:', e);
+                        }
+                    } else {
+                        console.error('No token found');
+                    }
+                });
+
+                $(document).on('click', '.cancel-order-btn', function() {
+                    const orderId = $(this).data('id');
+                    $('#cancel-options').show();
+                    $('#submit-cancellation').off('click').on('click', function() {
+                        const reason = $('input[name="cancel-reason"]:checked').val();
+                        if (!reason) {
+                            alert('Please select a cancellation reason.');
+                            return;
+                        }
+
+                        const token = getCookie('jwt');
+                        const orderCard = $(this).closest('.order-card');
+
+                        if (token) {
+                            $.ajax({
+                                url: `/api/v1/order/delete/${orderId}`,
+                                method: 'DELETE',
+                                headers: {
+                                    'Authorization': `Bearer ${token}`
+                                },
+                                data: JSON.stringify({ reason: reason }),
+                                contentType: 'application/json',
+                                success: function() {
+                                    alert('Your order has been deleted successfully.');
+                                    showCancelMessage(orderCard); // Update UI
+                                    setTimeout(function() {
+                                        orderCard.remove();
+                                        window.location.href = '/products';
+                                    }, 1000); // Remove the card after 5 seconds
+                                },
+                                error: function(xhr) {
+                                    console.error('Failed to cancel order:', xhr.responseText);
+                                }
+                            });
+                        }
+                    });
+                });
+
+                $(document).on('click', '.received-order-btn', function() {
+                    const orderId = $(this).data('id');
+                    const token = getCookie('jwt');
+
+                    if (token) {
+                        $.ajax({
+                            url: `/api/v1/order/completeOrder/${orderId}`,
+                            method: 'PATCH',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            },
+                            success: function() {
+                                alert('Order marked as received.');
+                                $(`.order-card[data-id="${orderId}"]`).remove(); // Remove the order card
+
+                                setTimeout(function() {
+                                     window.location.href = '/products'; // Redirect to /products
+                                }, 1000);
+                            },
+                            error: function(xhr) {
+                                console.error('Failed to mark order as received:', xhr.responseText);
+                            }
+                        });
+                    }
+                });
+            })
+
+    body
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input.search-bar(type='text' placeholder='Search for products')
+                        button.search-button Search
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Cart' class='nav-icon')
+                        span.nav-text Cart
+                    a(href='/signup')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text Sign Up
+
+        .container
+            .card
+                h1 See Your Orders Here!
+                
+                .button-container
+                    button#view-order-button.btn View Order
+                
+
+            #order-details(style='display: none;')
+
+            #no-orders-message(style='display: none;')
+                .message-box
+                  h2 No Orders Found
+                  p It looks like you don't have any orders at the moment. Please check back later.
+               
+              
+        // Cancellation Reason Options
+        #cancel-options(style='display: none;')
+            .options-container
+                h2 Select Cancellation Reason
+                label
+                    input(type='radio' name='cancel-reason' value='Change of mind')
+                    | mindChange of 
+                label
+                    input(type='radio' name='cancel-reason' value='Incorrect item ordered')
+                    | Incorrect item ordered
+                label
+                    input(type='radio' name='cancel-reason' value='Order not needed anymore')
+                    | Order not needed anymore
+                label
+                    input(type='radio' name='cancel-reason' value='Order arrived late')
+                    | Order arrived late
+                label
+                    input(type='radio' name='cancel-reason' value='Received wrong item')
+                    | Received wrong item
+                label
+                    input(type='radio' name='cancel-reason' value='Item was damaged or defective')
+                    | Item was damaged or defective
+                label
+                    input(type='radio' name='cancel-reason' value='Other')
+                    | Other
+                button#submit-cancellation.btn Submit
+
+        

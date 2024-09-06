@@ -1,0 +1,180 @@
+/* Reset and base styles */
+body,
+html,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: 'Lato', sans-serif;
+}
+
+body {
+  background: url('/img/dashboard11.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.header {
+  width: 100%;
+  background-color: white;
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  color: black;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left .site-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 35px;
+  color: black;
+  cursor: pointer;
+  animation: fadeIn 2s ease-in-out;
+  background: linear-gradient(45deg, #ff0000, #0000ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-button {
+  font-family: 'Space Grotesk', sans-serif;
+  /* color: black; */
+  border: 1px solid green;
+  padding: 5px 10px;
+  text-decoration: none;
+  background-color: #f1f1f1;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.navbar-button:hover {
+  background-color: green;
+  color: white;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  margin-top: 250px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease;
+  text-align: center;
+  background-image: url('/img/card.jpg');
+  background-size: cover;
+  width: 50%;
+}
+
+.card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.card h1 {
+  font-size: 2em;
+  color: rgb(0, 0, 0);
+  margin-bottom: 20px;
+  animation: fadeIn 2s ease-in-out;
+  background: linear-gradient(45deg, #ff0000, #0000ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 1.2em;
+  color: white;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+input,
+textarea,
+button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+input[type='text'],
+input[type='number'],
+input[type='date'],
+textarea {
+  background-color: white;
+}
+
+button.btn {
+  background-color: darkgreen;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button.btn:hover {
+  background-color: lightgreen;
+}
+
+/* button[type='button'] {
+  background-color: grey;
+}
+
+button[type='button']:hover {
+  background-color: lightgrey;
+} */
+
+.success-message {
+  color: #4caf50; /* Green color for success */
+  margin-top: 10px;
+  font-weight: bold; /* Make message bold */
+}
+
+.error-message {
+  color: #f44336; /* Red color for error */
+  margin-top: 10px;
+  font-weight: bold; /* Make message bold */
+}

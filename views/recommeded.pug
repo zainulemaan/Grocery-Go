@@ -1,0 +1,149 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo - BabyCare Products
+        link(rel='stylesheet' href='/css/bakeryProducts.css')
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet")
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+        script(src='/js/search.js')
+        script(src='/js/recommendations.js')
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input#search-input.search-bar(type='text' placeholder='Search for products')
+                        button#search-button.search-button Search
+                        button#voice-search-button.search-button
+                            i(class='fa fa-microphone')
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Cart' class='nav-icon')
+                        span.nav-text Cart
+                        span#cart-count(aria-live='polite') 0
+                    a(href='/signup')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text Sign Up
+
+        // Categories bar
+        .categories-bar
+            .categories-left
+                h3 Shop By Categories
+
+            .category-icons
+                // Category 1: Vegetables
+                .category-item
+                    i.fa.fa-utensils
+                    span Vegetables
+                    script.
+                        $(document).on('click', '.category-item:contains("Vegetables")', function() {
+                            window.location.href = '/fruits-vegetables-Products';
+                        });
+                .category-item
+                    i.fa.fa-apple-alt
+                    span Fruits
+                    script.
+                        $(document).on('click', '.category-item:contains("Fruits")', function() {
+                            window.location.href = '/fruits-vegetables-Products';
+                        });
+                // Category 2: Breakfast
+                .category-item
+                    i.fa.fa-bread-slice
+                    span Breakfast
+                    script.
+                        $(document).on('click', '.category-item:contains("Breakfast")', function() {
+                            window.location.href = '/breakfast-Products';
+                        });
+                .category-item
+                    i.fa.fa-concierge-bell
+                    span Dinner
+                    script.
+                        $(document).on('click', '.category-item:contains("Dinner")', function() {
+                            window.location.href = '/breakfast-Products';
+                        });
+                // Category 3: Meat
+                .category-item
+                    i.fa.fa-drumstick-bite
+                    span Meat
+                    script.
+                        $(document).on('click', '.category-item:contains("Meat")', function() {
+                            window.location.href = '/Meat-Seafood-Products';
+                        });
+                .category-item
+                    i.fa.fa-fish
+                    span SeaFood
+                    script.
+                        $(document).on('click', '.category-item:contains("SeaFood")', function() {
+                            window.location.href = '/Meat-Seafood-Products';
+                        });
+                // Category 4: Snacks
+                .category-item
+                    i.fa.fa-cookie
+                    span Snacks
+                    script.
+                        $(document).on('click', '.category-item:contains("Snacks")', function() {
+                            window.location.href = '/Snacks-Products';
+                        });
+                .category-item
+                    i.fa.fa-glass-martini-alt
+                    span Cold Drinks
+                    script.
+                        $(document).on('click', '.category-item:contains("Cold Drinks")', function() {
+                            window.location.href = '/Snacks-Products';
+                        });
+                // Category 5: Baby
+                .category-item
+                    i.fa.fa-baby-carriage
+                    span BabyCare
+                    script.
+                        $(document).on('click', '.category-item:contains("BabyCare")', function() {
+                            window.location.href = '/Babycare-Products';
+                        });
+                // Category 6: Pet
+                .category-item
+                    i.fa.fa-paw
+                    span PetCare
+                    script.
+                        $(document).on('click', '.category-item:contains("PetCare")', function() {
+                            window.location.href = '/Petcare-Products';
+                        });
+                // Category 7: Stationary
+                .category-item
+                    i.fa.fa-pen
+                    span Stationary
+                    script.
+                        $(document).on('click', '.category-item:contains("Stationary")', function() {
+                            window.location.href = '/Stationery-Products';
+                        });
+                // Category 8: Bakery
+                .category-item
+                    i.fa.fa-birthday-cake
+                    span Bakery
+                    script.
+                        $(document).on('click', '.category-item:contains("Bakery")', function() {
+                            window.location.href = '/bakery-dairy-Products';
+                        });
+
+        h3.products-heading Recommended Products
+        
+            
+        .recommendations-container
+            h3 Personalized Recommendations
+                
+        script.
+            $(document).ready(function() {
+                fetchRecommendations();
+            });

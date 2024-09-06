@@ -1,0 +1,51 @@
+
+doctype html
+html(lang='en')
+  head
+    title Orders - GrocerGo
+    link(rel='stylesheet', href='/css/orders.css') 
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300i,700")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js")
+    script(src='/js/orders.js', defer)
+  body
+    header
+      h1 Your Orders
+
+    .orders-container
+      #order-details
+        p No orders found.
+
+      // Modal for order cancellation options
+      #cancel-options(style='display: none;')
+        h2 Cancel Order
+        form
+          p Please select a reason for cancelling the order:
+          div
+            label
+              input(type='radio', name='cancel-reason', value='Changed my mind')
+              | Changed my mind
+            br
+            label
+              input(type='radio', name='cancel-reason', value='Order error')
+              | Order error
+            br
+            label
+              input(type='radio', name='cancel-reason', value='Order not needed anymore')
+              | Order not needed anymore
+            br
+            label
+              input(type='radio', name='cancel-reason', value='Incorrect item ordered')
+              | Incorrect item ordered
+            
+            br
+            label
+              input(type='radio', name='cancel-reason', value='Other')
+              | Other
+          br
+          button#submit-cancellation(type='button') Submit Cancellation
+          button#cancel-cancellation(type='button') Cancel
+
+    // Other page content can go here

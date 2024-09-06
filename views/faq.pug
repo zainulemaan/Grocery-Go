@@ -1,0 +1,142 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo - FAQs
+        link(rel='stylesheet' href='/css/faq.css') 
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet")
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+        script(src='/js/search.js')
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input#search-input.search-bar(type='text' placeholder='Search for products')
+                        button#search-button.search-button Search
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Wishlist' class='nav-icon')
+                        span.nav-text Cart
+                    a(href='/signup')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text Sign Up
+
+        main
+            .container
+                h6 Frequently Asked Questions
+                h3 What is GroceryGo?
+                p GroceryGo is an e-commerce platform offering a wide range of groceries and household products.
+
+                h3 Do you offer any loyalty program?
+                p Yes! We have a loyalty program. For more details, please click [here](/loyalty-program).
+
+                h3 What payment methods do you accept?
+                p We accept Cash on Delivery, Online Visa/MasterCard, Credit/Debit Card On Delivery, and UnionPay Debit/Credit Cards.
+
+                h3 I am having trouble verifying my account. What should I do?
+                p If you are experiencing issues with OTP SMS, please call our helpline (021) 111-624-333 from the same mobile number. Our CSR will assist with account verification.
+
+                h3 Do you ship orders across Pakistan?
+                p Yes, we deliver to over 800 cities in Pakistan.
+
+                h3 How much are the delivery charges?
+                p Please visit the [Delivery & Shipping](/delivery-info) page for detailed information.
+
+                h3 How can I track my order status?
+                p You can check the status of your order from the 'My Orders' screen in your account or through the Order Tracking page.
+
+                h3 How do I return a product?
+                p For information on returning a product, please visit the [Returns & Refunds](/returns-refunds) page.
+
+                h3 Are there any shipping charges for returns?
+                p No, shipping charges for returns are not applicable.
+
+                h3 Can I return a product after 7 days?
+                p Returns must be initiated within 7 days of delivery. We cannot accept return requests after this period.
+
+                h3 Do you verify orders before processing?
+                p Yes, our customer service team will call you to verify the order before processing it.
+
+                h3 What is your warranty policy?
+                p Warranty policies vary by vendor and product. GroceryGo does not handle warranty claims directly. These are processed through the vendor's service centers. If a product includes a warranty, it will be stated in the product specifications or description.
+
+        footer.footer
+            .footer-container
+                .footer-left
+                    h4 Contact Details
+                    p Address: 123 Grocery St, Freshville, FG 12345
+                    p Phone: (123) 456-7890
+                    p Email: contact@grocerygo.com
+                .footer-center
+                    h4 Customer Services
+                    ul
+                        li
+                            a(href='/contactus') Contact Us
+                        li
+                            a(href='/deliveryinfo') Delivery Info
+                        li
+                            a(href='/faq') FAQs
+                .footer-right
+                    h4 Connect with Us
+                    .social-icons
+                        a(href='#')
+                            i.fab.fa-facebook-f.social-icon(style="color: #4267B2")
+                        a(href='#')
+                            i.fab.fa-youtube.social-icon(style="color: #FF0000")
+                        a(href='#')
+                            i.fab.fa-instagram.social-icon(style="color: #E4405F")
+                        a(href='#')
+                            i.fab.fa-twitter.social-icon(style="color: #1DA1F2")
+            .footer-bottom
+                p © 2024 GroceryGo. All rights reserved.
+
+        //- script.
+        //-     // Function to get a specific cookie value by name
+        //-     function getCookie(name) {
+        //-         const value = `; ${document.cookie}`;
+        //-         const parts = value.split(`; ${name}=`);
+        //-         if (parts.length === 2) return parts.pop().split(';').shift();
+        //-     }
+
+        //-     // Function to decode JWT and get userId
+        //-     function getUserIdFromJwt(token) {
+        //-         try {
+        //-             const decoded = jwt_decode(token);
+        //-             return decoded.id; // Adjust according to your token structure
+        //-         } catch (error) {
+        //-             console.error('Failed to decode JWT:', error);
+        //-             return null;
+        //-         }
+        //-     }
+
+        //-     $(document).ready(function() {
+        //-         const jwtCookie = getCookie('jwt');
+
+        //-         if (!jwtCookie) {
+        //-             console.error('JWT not found in cookie.');
+        //-             return;
+        //-         }
+
+        //-         const userId = getUserIdFromJwt(jwtCookie);
+
+        //-         if (!userId) {
+        //-             console.error('User ID not found in JWT.');
+        //-             return;
+        //-         }
+
+        //-         // Update form action with userId
+        //-         $('#contactForm').attr('action', `/api/v1/contactUs/${userId}/ContactUs`);
+        //-     });

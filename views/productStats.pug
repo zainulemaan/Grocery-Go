@@ -1,0 +1,148 @@
+
+
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Product Statistics
+    link(rel='stylesheet' href='/css/productstats.css')
+    link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+    link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet")
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+  body
+    // Header
+    header.header
+      nav.navbar
+        .navbar-left
+          a(href='/')
+            img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+    // Dashboard Content
+    .dashboard-container
+      h1 Product Statistics
+      // Overall Stats
+      .stats-section
+        h2 Overall Statistics
+        p Total Products Sold: #{totalSales || 'N/A'}
+        p Total Revenue: $#{(totalRevenue || 0).toFixed(2)}
+        h3 Monthly Revenue
+        table#monthly-revenue-stats
+          thead
+            tr
+              th Month
+              th Year
+              th Total Revenue
+          tbody
+            // Data will be injected here by JavaScript
+        h3 Yearly Revenue
+        table#yearly-revenue-stats
+          thead
+            tr
+              th Year
+              th Total Revenue
+          tbody
+            // Data will be injected here by JavaScript
+      // Sales by Category
+      .stats-section
+        h2 Sales by Category
+        table#category-stats
+          thead
+            tr
+              th Category
+              th Total Products Sold
+              th Total Revenue
+          tbody
+            // Data will be injected here by JavaScript
+      // Most Sold Products
+      .stats-section
+        h2 Most Sold Products
+        table#most-sold-products
+          thead
+            tr
+              th Name
+              th Sales
+              th Price
+              th Category
+          tbody
+            // Data will be injected here by JavaScript
+      // Least Sold Products
+      .stats-section
+        h2 Least Sold Products
+        table#least-sold-products
+          thead
+            tr
+              th Name
+              th Sales
+              th Price
+              th Category
+          tbody
+            // Data will be injected here by JavaScript
+    script.
+      $(document).ready(function() {
+        $.getJSON('/api/v1/products/productss-stats', function(data) {
+          if (data.status === 'success') {
+            // Update overall stats
+            $('p:contains("Total Products Sold:")').text(`Total Products Sold: ${data.data.overallStats.totalProductsSold || 'N/A'}`);
+            $('p:contains("Total Revenue:")').text(`Total Revenue: PKR ${(data.data.overallStats.totalRevenue || 0).toFixed(2)}Rs`);
+            
+            // Populate monthly revenue
+            data.data.monthlyRevenue.forEach(function(revenue) {
+              $('#monthly-revenue-stats tbody').append(
+                `<tr>
+                  <td>${revenue._id.month || 'N/A'}</td>
+                  <td>${revenue._id.year || 'N/A'}</td>
+                  <td>PKR ${(revenue.totalRevenue || 0).toFixed(2)}Rs</td>
+                </tr>`
+              );
+            });
+            
+            // Populate yearly revenue
+            data.data.yearlyRevenue.forEach(function(revenue) {
+              $('#yearly-revenue-stats tbody').append(
+                `<tr>
+                  <td>${revenue._id.year || 'N/A'}</td>
+                  <td>PKR ${(revenue.totalRevenue || 0).toFixed(2)}Rs</td>
+                </tr>`
+              );
+            });
+
+            // Populate category stats
+            data.data.categoryStats.forEach(function(stat) {
+              $('#category-stats tbody').append(
+                `<tr>
+                  <td>${stat._id || 'N/A'}</td>
+                  <td>${stat.totalProductsSold || 0}</td>
+                  <td>PKR ${(stat.totalRevenue || 0).toFixed(2)}Rs</td>
+                </tr>`
+              );
+            });
+
+            // Populate most sold products
+            data.data.mostSoldProducts.forEach(function(product) {
+              $('#most-sold-products tbody').append(
+                `<tr>
+                  <td>${product.name || 'N/A'}</td>
+                  <td>${product.sales || 0}</td>
+                  <td>PKR ${(product.price || 0).toFixed(2)}Rs</td>
+                  <td>${product.category || 'N/A'}</td>
+                </tr>`
+              );
+            });
+
+            // Populate least sold products
+            data.data.leastSoldProducts.forEach(function(product) {
+              $('#least-sold-products tbody').append(
+                `<tr>
+                  <td>${product.name || 'N/A'}</td>
+                  <td>${product.sales || 0}</td>
+                  <td>PKR${(product.price || 0).toFixed(2)}Rs</td>
+                  <td>${product.category || 'N/A'}</td>
+                </tr>`
+              );
+            });
+          }
+        });
+      });

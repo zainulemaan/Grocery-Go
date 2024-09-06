@@ -1,0 +1,176 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo - Contact Us
+        link(rel='stylesheet' href='/css/contactus.css') 
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet")
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+        script(src='/js/search.js')
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input#search-input.search-bar(type='text' placeholder='Search for products')
+                        button#search-button.search-button Search
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Wishlist' class='nav-icon')
+                        span.nav-text Cart
+                    a(href='/signup')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text Sign Up
+
+        main
+            .container
+                h2 GET IN TOUCH WITH US
+                p If you have any query, please don’t hesitate to send us a message
+                
+                form#contactForm(action='/api/v1/contactUs/ContactUs', method='POST')
+                    .form-group
+                        label(for='name') Name:
+                        input#name(type='text', name='name', required=true minlength='2' maxlength='50')
+                        .error-message!= (errors && errors.name ? errors.name : '')
+                  
+                    .form-group
+                        label(for='queryType') Query Type:
+                        select#queryType(name='queryType', required=true)
+                            option(value='', disabled=true, selected=true) Select a query type
+                            option(value='General') General
+                            option(value='Complaint') Complaint
+                            option(value='Suggestion') Suggestion
+                            option(value='Other') Other
+                        .error-message!= (errors && errors.queryType ? errors.queryType : '')
+
+                    .form-group
+                        label(for='email') Email:
+                        input#email(type='email', name='email', required=true)
+                        .error-message!= (errors && errors.email ? errors.email : '')
+
+                    .form-group
+                        label(for='phoneNumber') Phone Number:
+                        input#phoneNumber(type='text', name='phoneNumber', required=true pattern='^[+]92[0-9]{10}$' placeholder='+92XXXXXXXXXX')
+                        .error-message!= (errors && errors.phoneNumber ? errors.phoneNumber : '')
+
+                    .form-group
+                        label(for='details') Details:
+                        textarea#details(name='details', rows='4', required=true minlength='10')
+                        .error-message!= (errors && errors.details ? errors.details : '')
+
+                    button(type='submit') Submit
+
+            footer.footer
+                .footer-container
+                    .footer-left
+                        h4 Contact Details
+                        p Address: 123 Grocery St, Freshville, FG 12345
+                        p Phone: (123) 456-7890
+                        p Email: contact@grocerygo.com
+                    .footer-center
+                        h4 Customer Services
+                        ul
+                            li
+                                a(href='/contactus') Contact Us
+                            li
+                                a(href='/deliveryinfo') Delivery Info
+                            li
+                                a(href='/faq') FAQs
+                    .footer-right
+                        h4 Connect with Us
+                        .social-icons
+                            a(href='#')
+                                i.fab.fa-facebook-f.social-icon(style="color: #4267B2")
+                            a(href='#')
+                                i.fab.fa-youtube.social-icon(style="color: #FF0000")
+                            a(href='#')
+                                i.fab.fa-instagram.social-icon(style="color: #E4405F")
+                            a(href='#')
+                                i.fab.fa-twitter.social-icon(style="color: #1DA1F2")
+                .footer-bottom
+                    p © 2024 GroceryGo. All rights reserved.
+
+        // Toast message container
+        .toast-container
+            .toast-message Your request has been sent. Thank you! We Will Shorlty Contact You.
+
+        script.
+            // Function to get a specific cookie value by name
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            }
+
+           
+            function getUserIdFromJwt(token) {
+                try {
+                    const decoded = jwt_decode(token);
+                    return decoded.id; 
+                } catch (error) {
+                    console.error('Failed to decode JWT:', error);
+                    return null;
+                }
+            }
+
+            $(document).ready(function() {
+                const jwtCookie = getCookie('jwt');
+
+                if (!jwtCookie) {
+                    console.error('JWT not found in cookie.');
+                    return;
+                }
+
+                const userId = getUserIdFromJwt(jwtCookie);
+
+                if (!userId) {
+                    console.error('User ID not found in JWT.');
+                    return;
+                }
+
+                // Update form action with userId
+                $('#contactForm').attr('action', `/api/v1/contactUs/${userId}/ContactUs`);
+
+                // Handle form submission
+                $('#contactForm').on('submit', function(event) {
+                    const name = $('#name').val();
+                    // Validate that name contains only alphabetic characters and spaces
+                    const namePattern = /^[a-zA-Z\s]+$/;
+
+                    if (!namePattern.test(name)) {
+                        alert('Please enter a valid name. The name should contain only alphabetic characters and spaces.');
+                        return false; // Prevent form submission
+                    }
+
+                    
+                    event.preventDefault(); 
+
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        method: 'POST',
+                        data: $(this).serialize(),
+                        success: function(response) {
+                            
+                            
+                            $('.toast-container').fadeIn().delay(7000).fadeOut();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Form submission failed:', error);
+                        }
+                    });
+                });
+            });
+
+

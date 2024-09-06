@@ -1,0 +1,590 @@
+.navbar-right a {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Remove underline */
+  color: black; /* Ensure text color matches */
+}
+
+.navbar-right .nav-icon {
+  width: 33px; /* Set width */
+  height: 33px; /* Set height */
+  margin-right: 15px; /* Add spacing between icon and text */
+}
+
+.navbar-right .nav-text {
+  font-family: 'Space Grotesk', sans-serif; /* Better font for nav text */
+  font-size: 1em; /* Adjust font size */
+}
+
+/* Body styling */
+body,
+html,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  position: relative;
+  background-color: #f8f9fa;
+}
+
+.header {
+  width: 100%;
+  background-color: white;
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  color: black;
+}
+
+.navbar-left {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo {
+  width: 150px;
+  height: auto;
+}
+
+/* Keyframes for the spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.navbar-left a img.nav-logo {
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease;
+}
+
+.navbar-left a:hover img.nav-logo {
+  animation: spin 0.6s; /* Apply the spin animation */
+  transform: scale(1.1); /* Slightly increase the size */
+  filter: brightness(1.2) contrast(1.2) saturate(1.5); /* Adjust color on hover */
+}
+
+.navbar-right .nav-icon {
+  font-size: 1.5em;
+  color: rgba(67, 242, 67, 0.885);
+  margin-left: 15px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.navbar-right .nav-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.navbar-right .nav-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2em;
+  color: black;
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  position: relative;
+  background-color: #f8f9fa;
+}
+
+.header {
+  width: 100%;
+  background-color: white;
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  color: black;
+}
+
+.navbar-left,
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left .site-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 35px;
+  color: black;
+  cursor: pointer;
+  animation: fadeIn 2s ease-in-out;
+  background: linear-gradient(45deg, #ff0000, #0000ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar-left .site-name:hover {
+  color: #289af1dd;
+  animation: bounce 1s infinite;
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+/* Search form styling */
+.search-form {
+  font-family: 'Space Grotesk', sans-serif;
+  display: flex;
+  width: 60%;
+  position: relative; /* Ensure proper positioning of child elements */
+}
+
+/* Search bar styling */
+.search-bar {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  border: 2px solid; /* Use solid border for gradient */
+  border-image: linear-gradient(
+    to right,
+    #46faf1,
+    #f358f8
+  ); /* Gradient border */
+  border-image-slice: 1; /* Ensure the gradient covers the entire border */
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 4px 0 0 4px; /* Rounded corners for the input */
+  background-color: white; /* Background color for better visibility */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+  width: calc(
+    100% - 60px
+  ); /* Adjust width to accommodate the search and voice buttons */
+}
+
+/* Search bar focus styling */
+.search-bar:focus {
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on focus */
+}
+
+/* Search button styling */
+.search-form .search-button {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 0 4px 4px 0; /* Rounded corners for the button */
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transition for background and shadow */
+  position: relative; /* Ensure it sits beside the search bar */
+  z-index: 1; /* Ensure it is above the voice search button */
+}
+
+/* Search button hover styling */
+.search-form .search-button:hover {
+  background-color: red; /* Inverted gradient on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+.search-form #voice-search-button {
+  background-color: black !important; /* Green background */
+  border: none !important; /* Remove default border */
+  color: white !important; /* White text color */
+  padding: 12px !important; /* Padding for size */
+  border-radius: 50% !important; /* Rounded button */
+  cursor: pointer !important; /* Pointer cursor on hover */
+  display: flex !important; /* Flex for centering the icon */
+  align-items: center !important; /* Center the icon vertically */
+  justify-content: center !important; /* Center the icon horizontally */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Shadow effect */
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s !important; /* Smooth transitions */
+  margin-left: 10px !important; /* Space between the search button and voice search button */
+  width: 40px !important; /* Fixed width for button */
+  height: 40px !important; /* Fixed height for button */
+}
+
+/* Voice search button hover styling */
+.search-form #voice-search-button:hover {
+  background-color: red !important; /* Slightly darker green on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important; /* More shadow on hover */
+}
+
+/* Icon size in the voice search button */
+.search-form #voice-search-button i {
+  font-size: 20px !important; /* Adjust icon size */
+}
+
+/* Remove default focus outline for voice search button */
+.search-form #voice-search-button:focus {
+  outline: none !important; /* Remove default outline */
+}
+.navbar-right .nav-icon {
+  font-size: 1.5em;
+  color: rgba(67, 242, 67, 0.885);
+  margin-left: 15px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.navbar-right .nav-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.navbar-right .nav-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2em;
+  color: black;
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .search-form {
+    width: 100%;
+  }
+}
+#cart-count {
+  position: relative;
+  top: -25px;
+  left: -60px;
+  background-color: #ff0000; /* Red background for the count */
+  color: #ffffff; /* White text color */
+  border-radius: 50%; /* Makes the badge circular */
+  width: 25px; /* Width of the badge */
+  height: 25px; /* Height of the badge */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px; /* Font size of the count */
+  font-weight: bold; /* Bold text */
+  z-index: 10; /* Ensures the badge is on top */
+  font-weight: 600;
+}
+
+#cart-count:hover {
+  transform: scale(1.2); /* Scale up the badge */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow effect */
+}
+
+/* Wishlist section */
+/* Wishlist section */
+main {
+  padding: 25px;
+}
+
+.wishlist h1 {
+  font-size: 30px;
+  margin-bottom: 30px;
+  color: #444;
+  font-family: 'Helvetica', sans-serif;
+  text-align: center;
+}
+
+.wishlist-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+ul#wishlist-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+  background: #fdfdfd;
+  border-radius: 10px;
+  transition: border 0.3s;
+}
+
+.wishlist-item:hover {
+  border: 2px solid #3498db;
+}
+
+.wishlist-item-image {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 20px;
+  border: 1px solid #ddd;
+}
+
+.wishlist-item-details {
+  flex: 1;
+}
+
+.wishlist-item-name {
+  font-size: 22px;
+  color: #444;
+  margin: 0;
+}
+
+.wishlist-item-price {
+  font-size: 18px;
+  color: #3498db;
+  margin: 5px 0;
+}
+
+.wishlist-item-quantity {
+  font-size: 16px;
+  color: #666;
+}
+
+footer.footer {
+  background-color: #ffffff;
+  border-top: 2px solid #eee;
+  padding: 15px 20px;
+  text-align: center;
+  font-size: 16px;
+  color: #888;
+}
+
+.add-to-cart {
+  font-family: 'Space Grotesk', sans-serif;
+  margin-top: 18px;
+  width: 14%; /* Adjust size as needed */
+  padding: 8px 16px;
+  background: linear-gradient(
+    135deg,
+    #1beb0c,
+    #0cae0c
+  ); /* Gradient background */
+  color: #fff;
+  border: none;
+  border-radius: 8px; /* Slightly larger border radius */
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    box-shadow 0.3s; /* Smooth transition for background and box-shadow */
+  font-weight: 700;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.add-to-cart:hover {
+  background: linear-gradient(
+    135deg,
+    #1f2524,
+    #1b5d1c
+  ); /* Darker gradient on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+}
+.cancel-card {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to right, #66bb6a, #43a047); /* Gradient green */
+  color: white;
+  padding: 25px 35px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 1000;
+  width: auto;
+  max-width: 380px;
+}
+
+.cancel-card i {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+/* Style for the Clear Wishlist button */
+.btn-clear-wishlist {
+  background-color: #e74c3c; /* Red background */
+  color: #fff; /* White text */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for size */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition:
+    background-color 0.3s,
+    transform 0.2s; /* Smooth transitions */
+}
+
+.btn-clear-wishlist:hover {
+  background-color: #c0392b; /* Darker red on hover */
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+.btn-clear-wishlist:active {
+  background-color: #a93226; /* Even darker red when clicked */
+  transform: scale(0.98); /* Slightly shrink the button on click */
+}
+
+/* 
+main {
+  padding: 20px;
+}
+
+.wishlist h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.wishlist-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ul#wishlist-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.wishlist-item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.wishlist-item-details {
+  flex: 1;
+}
+
+.wishlist-item-name {
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+}
+
+.wishlist-item-price {
+  font-size: 16px;
+  color: #28a745;
+  margin: 5px 0;
+}
+
+.wishlist-item-quantity {
+  font-size: 14px;
+  color: #555;
+}
+
+footer.footer {
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+} */

@@ -1,0 +1,103 @@
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #2196f3;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.container {
+    font-family: 'Space Grotesk', sans-serif;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-item {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.order-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.order-header {
+    font-family: 'Space Grotesk', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f1f1f1;
+    padding-bottom: 10px;
+}
+
+.order-header h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.status {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.status .fa-check-circle {
+    color: #4caf50; /* Green for completed */
+}
+
+.status .fa-times-circle {
+    color: #f44336; /* Red for canceled */
+}
+
+.order-details p {
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 5px 0;
+    font-size: 15px;
+    color: #666;
+}
+
+.order-details strong {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .order-header h3 {
+        font-size: 18px;
+    }
+    
+    .order-details p {
+        font-size: 14px;
+    }
+}

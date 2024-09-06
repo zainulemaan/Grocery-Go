@@ -1,0 +1,241 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title All Products
+        link(rel='stylesheet' href='/css/bakeryproducts.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet") 
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js') // Include js-cookie library
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js') 
+        script(src='/js/cartCount.js')
+        script.
+            $(document).ready(function() {
+                function fetchProducts() {
+                    $.ajax({
+                        url: '/api/v1/products',
+                        type: 'GET',
+                        success: function(response) {
+                            var products = response.data.products; 
+                            displayProducts(products);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Failed to fetch products:', error);
+                        }
+                    });
+                }
+
+                function displayProducts(products) {
+                    var productsContainer = $('#productsContainer');
+                    productsContainer.empty();
+
+                    products.forEach(function(product) {
+                        var productHTML = `
+                            <div class="product-card" data-id="${product._id}">
+                                <div class="product-image">
+                                    <img src="/img/products/${product.photo}" alt="${product.name}">
+                                </div>
+                                <div class="product-details">
+                                    <h3>${product.name}</h3>
+                                    <div class="price">
+                                        <span class="original-price">PKR ${product.price}</span>
+                                        <span class="discounted-price">PKR ${calculateDiscountedPrice(product.price, product.discountPercentage)}</span>
+                                    </div>
+                                    <button class="add-to-cart" data-product-id="${product._id}">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        productsContainer.append(productHTML);
+                    });
+
+                    // Event listener for add to cart button
+                    $('.products-container').on('click', '.add-to-cart', function() {
+                        const productId = $(this).data('product-id');
+                        const jwtCookie = getCookie('jwt');
+
+                        if (!jwtCookie) {
+                            console.error('JWT not found in cookie.');
+                            return;
+                        }
+
+                        const userId = getUserIdFromJwt(jwtCookie); // Extract userId from JWT
+
+                        if (!userId) {
+                            console.error('User ID not found in JWT.');
+                            return;
+                        }
+
+                        // API request to add product to cart
+                        $.ajax({
+                            url: `/api/v1/cart/${userId}/addToCart`,
+                            method: 'POST',
+                            contentType: 'application/json',
+                            headers: {
+                                'Authorization': `Bearer ${jwtCookie}`
+                            },
+                            data: JSON.stringify({ productId, productQuantity: 1 }),
+                            success: function(response) {
+                                if (response.status === 'success') {
+                                    console.log('Product added to cart successfully!');
+                                    // Handle success message or action
+                                } else {
+                                    console.error('Failed to add product to cart:', response.error);
+                                    // Handle failure message or action
+                                }
+                            },
+                            error: function(xhr) {
+                                console.error('Error adding product to cart:', xhr);
+                                // Handle error message or action
+                            }
+                        });
+                    });
+                }
+
+                function calculateDiscountedPrice(price, discountPercentage) {
+                    return price * (1 - discountPercentage / 100);
+                }
+
+                function getCookie(name) {
+                    return Cookies.get(name);
+                }
+
+                function getUserIdFromJwt(jwt) {
+                    try {
+                        const decoded = jwt_decode(jwt);
+                        return decoded.id;
+                    } catch (error) {
+                        console.error('Error decoding JWT:', error);
+                        return null;
+                    }
+                }
+
+                fetchProducts();
+            });
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Wishlist' class='nav-icon')
+                        span.nav-text Cart
+                        span#cart-count(aria-live='polite') 0
+                    a(href='/signup')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text Sign Up
+        // Categories bar
+        .categories-bar
+            .categories-left
+                h3 Shop By Categories
+
+            .category-icons
+                // Category 1: Vegetables
+                .category-item
+                    i.fa.fa-utensils
+                    span Vegetables
+                    script.
+                        $(document).on('click', '.category-item:contains("Vegetables")', function() {
+                            window.location.href = '/fruits-vegetables-Products';
+                        });
+                // Category 2: Fruits
+                .category-item
+                    i.fa.fa-apple-alt
+                    span Fruits
+                    script.
+                        $(document).on('click', '.category-item:contains("Fruits")', function() {
+                            window.location.href = '/fruits-vegetables-Products';
+                        });
+                // Category 3: Breakfast
+                .category-item
+                    i.fa.fa-bread-slice
+                    span Breakfast
+                    script.
+                        $(document).on('click', '.category-item:contains("Breakfast")', function() {
+                            window.location.href = '/breakfast-Products';
+                        });
+                // Category 4: Dinner
+                .category-item
+                    i.fa.fa-concierge-bell
+                    span Dinner
+                    script.
+                        $(document).on('click', '.category-item:contains("Dinner")', function() {
+                            window.location.href = '/breakfast-Products';
+                        });
+                // Category 5: Meat
+                .category-item
+                    i.fa.fa-drumstick-bite
+                    span Meat
+                    script.
+                        $(document).on('click', '.category-item:contains("Meat")', function() {
+                            window.location.href = '/Meat-Seafood-Products';
+                        });
+                // Category 6: SeaFood
+                .category-item
+                    i.fa.fa-fish
+                    span SeaFood
+                    script.
+                        $(document).on('click', '.category-item:contains("SeaFood")', function() {
+                            window.location.href = '/Meat-Seafood-Products';
+                        });
+                // Category 7: Snacks
+                .category-item
+                    i.fa.fa-cookie
+                    span Snacks
+                    script.
+                        $(document).on('click', '.category-item:contains("Snacks")', function() {
+                            window.location.href = '/Snacks-Products';
+                        });
+                // Category 8: Cold Drinks
+                .category-item
+                    i.fa.fa-glass-martini-alt
+                    span ColdDrinks
+                    script.
+                        $(document).on('click', '.category-item:contains("Cold Drinks")', function() {
+                            window.location.href = '/Snacks-Products';
+                        });
+                // Category 9: BabyCare
+                .category-item
+                    i.fa.fa-baby-carriage
+                    span BabyCare
+                    script.
+                        $(document).on('click', '.category-item:contains("BabyCare")', function() {
+                            window.location.href = '/Babycare-Products';
+                        });
+                // Category 10: PetCare
+                .category-item
+                    i.fa.fa-paw
+                    span PetCare
+                    script.
+                        $(document).on('click', '.category-item:contains("PetCare")', function() {
+                            window.location.href = '/Petcare-Products';
+                        });
+                // Category 11: Stationary
+                .category-item
+                    i.fa.fa-pen
+                    span Stationary
+                    script.
+                        $(document).on('click', '.category-item:contains("Stationary")', function() {
+                            window.location.href = '/Stationery-Products';
+                        }); 
+                // Category 12: Bakery
+                .category-item
+                    i.fa.fa-birthday-cake
+                    span Bakery
+                    script.
+                        $(document).on('click', '.category-item:contains("Bakery")', function() {
+                            window.location.href = '/bakery-dairy-Products';
+                        });
+
+        // Products Container
+        .products-container#productsContainer
+            // Products will be dynamically added here via JavaScript

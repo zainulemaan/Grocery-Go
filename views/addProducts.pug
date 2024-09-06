@@ -1,0 +1,122 @@
+
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title Add Product
+        link(rel='stylesheet' href='/css/addProducts.css')
+        link(rel='stylesheet' href='/css/form.css')
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet") 
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='/js/addProducts.js')
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+
+        // Form Container
+        .form-container
+            .card
+                h1 Add Product
+                form(id='addProductForm' method='POST' action='/api/v1/products' enctype='multipart/form-data')
+                    .form-group
+                        label(for='name') Product Name
+                        input#name(type='text' name='name' required)
+                        span.error-message(style='display: none; color: red;')
+
+                    .form-group
+                        label(for='brand') Brand
+                        input#brand(type='text' name='brand' required)
+                        span.error-message(style='display: none; color: red;')
+
+                    .form-group
+                        label(for='price') Price
+                        input#price(type='number' name='price' required)
+                        span.error-message(style='display: none; color: red;')
+
+                    .form-group
+                        label(for='description') Description
+                        textarea#description(name='description')
+                        span.error-message(style='display: none; color: red;')
+
+                    .form-group
+                        label(for='category') Category
+                        .custom-select
+                            select#category(name='category' required)
+                                option(value='' selected disabled) Choose Category
+                                option(value='dairy') Dairy
+                                option(value='bakery') Bakery
+                                option(value='fruits') Fruits
+                                option(value='vegetables') Vegetables
+                                option(value='meat') Meat
+                                option(value='seafood') Seafood
+                                option(value='stationery') Stationery
+                                option(value='homecare') Homecare
+                                option(value='snacks') Snacks
+                                option(value='colddrinks') Cold Drinks
+                                option(value='health') Health
+                                option(value='babycarehealt') Baby Care
+                                option(value='petcare') Pet Care
+                                option(value='vet') Vet
+                                option(value='breakfast') Breakfast
+                                option(value='dinner') Dinner
+                            span.error-message(style='display: none; color: red;')
+                        .select-arrow
+
+                    .form-group
+                        label(for='quantityAvailable') Quantity Available
+                        input#quantityAvailable(type='number' name='quantityAvailable')
+                        span.error-message(style='display: none; color: red;')
+
+                    .form-group
+                        label(for='expiryDate') Expiry Date
+                        input#expiryDate(type='date' name='expiryDate')
+                        span.error-message(style='display: none; color: red;')
+
+                    .form-group
+                        label(for='discountPercentage') Discount Percentage
+                        input#discountPercentage(type='number' name='discountPercentage' step='0.01')
+                        span.error-message(style='display: none; color: red;')
+
+                    .form-group
+                        label(for='size') Size
+                        .custom-select
+                            select#size(name='size' required)
+                                option(value='' selected disabled) Choose Size
+                                option(value='1kg') 1kg
+                                option(value='2kg') 2kg
+                                option(value='3kg') 3kg
+                                option(value='5kg') 5kg
+                                option(value='220ml') 220ml
+                                option(value='250ml') 250ml
+                                option(value='350ml') 350ml
+                                option(value='500ml') 500ml
+                                option(value='1L') 1L
+                                option(value='2L') 2L
+                                option(value='5L') 5L
+                                option(value='100g') 100g
+                                option(value='200g') 200g
+                                option(value='250g') 250g
+                                option(value='500g') 500g
+                            span.error-message(style='display: none; color: red;')
+                        .select-arrow
+
+                    .form-group
+                        label(for='photo') Photo
+                        input#photo(type='file' name='photo' accept='image/*' required)
+                        span.error-message(style='display: none; color: red;')
+
+                    .form-group
+                        button.btn(type='submit') Add Product
+                    .form-group
+                        button.btn(type='button' id='backToDashboardBtn') Back to Dashboard
+                    .form-message(style='display: none; font-weight: 600; margin-top: 10px;')

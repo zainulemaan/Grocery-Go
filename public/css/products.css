@@ -1,0 +1,1244 @@
+/* CSS for Wishlist and Profile icons */
+
+.navbar-right a {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Remove underline */
+  color: black; /* Ensure text color matches */
+}
+
+.navbar-right .nav-icon {
+  width: 33px; /* Set width */
+  height: 33px; /* Set height */
+  margin-right: 15px; /* Add spacing between icon and text */
+}
+
+.navbar-right .nav-text {
+  font-family: 'Space Grotesk', sans-serif; /* Better font for nav text */
+  font-size: 1em; /* Adjust font size */
+}
+
+/* Body styling */
+body,
+html,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  position: relative;
+  background-color: #f8f9fa;
+}
+
+.header {
+  width: 100%;
+  background-color: white;
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  color: black;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  margin-left: -35px;
+}
+
+.nav-logo {
+  width: 125px;
+  height: auto;
+}
+
+/* Keyframes for the spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.navbar-left a img.nav-logo {
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease;
+}
+
+.navbar-left a:hover img.nav-logo {
+  animation: spin 0.6s; /* Apply the spin animation */
+  transform: scale(1.1); /* Slightly increase the size */
+  filter: brightness(1.2) contrast(1.2) saturate(1.5); /* Adjust color on hover */
+}
+
+.navbar-dropdown {
+  margin-left: 65px;
+}
+
+/* Dropdown menu styling */
+.department-dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  padding: 10px 15px;
+  background-color: #2857a7;
+  color: #fff;
+  /* border-radius: 5px; */
+  font-weight: 700;
+  font-family: 'Quicksand', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.department-dropdown.active {
+  background-color: #218838;
+}
+
+.department-dropdown i {
+  margin-left: 5px;
+}
+
+.dropdown-menu {
+  list-style: none;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  min-width: 160px;
+  z-index: 1000;
+}
+.dropdown-menu:hover {
+  color: red;
+}
+
+.department-dropdown.active .dropdown-menu {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  color: #333;
+  cursor: pointer;
+  font-weight: 400;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: red;
+}
+
+.dropdown-item:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Container for aligning search form elements */
+.navbar-center {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+/* Search form styling */
+.search-form {
+  font-family: 'Space Grotesk', sans-serif;
+  display: flex;
+  width: 78%;
+  position: relative; /* Ensure proper positioning of child elements */
+}
+
+/* Search bar styling */
+.search-bar {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  border: 2px;
+  /* border-image: linear-gradient(
+    to right,
+    #46faf1,
+    #f358f8
+  ); 
+  border-image-slice: 1;  */
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 25px;
+  /* border-radius: 20px 0 0 4px;  */
+  background-color: white; /* Background color for better visibility */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  width: calc(100% - 60px);
+}
+
+/* Search bar focus styling */
+.search-bar:focus {
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on focus */
+}
+
+/* Search button styling */
+.search-form .search-button {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 0 4px 4px 0; /* Rounded corners for the button */
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transition for background and shadow */
+  position: relative; /* Ensure it sits beside the search bar */
+  z-index: 1; /* Ensure it is above the voice search button */
+}
+
+/* Search button hover styling */
+.search-form .search-button:hover {
+  background-color: red; /* Inverted gradient on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+.search-form #voice-search-button {
+  background-color: white !important; /* Green background */
+  border: none !important; /* Remove default border */
+  color: black !important; /* White text color */
+  padding: 12px !important; /* Padding for size */
+  border-radius: 50% !important; /* Rounded button */
+  cursor: pointer !important; /* Pointer cursor on hover */
+  display: flex !important; /* Flex for centering the icon */
+  align-items: center !important; /* Center the icon vertically */
+  justify-content: center !important; /* Center the icon horizontally */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Shadow effect */
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s !important; /* Smooth transitions */
+  margin-left: 10px !important; /* Space between the search button and voice search button */
+  width: 40px !important; /* Fixed width for button */
+  height: 40px !important; /* Fixed height for button */
+}
+
+/* Voice search button hover styling */
+.search-form #voice-search-button:hover {
+  background-color: red !important; /* Slightly darker green on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important; /* More shadow on hover */
+}
+
+/* Icon size in the voice search button */
+.search-form #voice-search-button i {
+  font-size: 20px !important; /* Adjust icon size */
+}
+
+/* Remove default focus outline for voice search button */
+.search-form #voice-search-button:focus {
+  outline: none !important; /* Remove default outline */
+}
+
+.navbar-right .nav-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.navbar-right .nav-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2em;
+  color: black;
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Styles for the information strip */
+.info-strip {
+  background-color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.info-left,
+.info-right {
+  display: flex;
+  align-items: center;
+}
+
+.info-left span,
+.info-right span {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  color: #333;
+  margin: 0 10px;
+}
+
+.info-left .divider,
+.info-right .divider {
+  margin: 0 15px;
+  color: #ccc;
+}
+
+.info-left i {
+  margin-right: 5px;
+}
+
+.info-right span {
+  cursor: pointer;
+}
+
+.info-right span:hover {
+  text-decoration: underline;
+}
+
+
+/* Categories bar styles */
+.categories-bar {
+  padding: 20px;
+  background-color: #f8f9fa; /* Light background for the bar */
+}
+
+.categories-left h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+  font-family: 'Lato', sans-serif;
+}
+
+.category-icons {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  gap: 20px; /* Space between cards */
+  overflow-x: auto; /* Allow horizontal scroll if necessary */
+  padding-bottom: 10px; /* Optional: Add some padding at the bottom */
+}
+
+.category-item {
+  background-color: #fff; /* White background for cards */
+  border: 1px solid #ddd; /* Light border for cards */
+  border-radius: 10px; /* Rounded corners */
+  flex: 0 0 calc(12.5% - 20px); /* 8 items in one line with gaps */
+  height: 150px; /* Adjust the height as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for cards */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.category-item:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.category-item i {
+  font-size: 36px;
+  color: #ff6347; /* Tomato color for icons */
+  margin-bottom: 10px;
+}
+
+.category-item span {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Optional: Hide scrollbar for a cleaner look */
+.category-icons::-webkit-scrollbar {
+  display: none;
+}
+
+.category-icons {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* 
+.categories-bar {
+  font-family: 'Space Grotesk', sans-serif;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 245, 245, 1) 0%,
+    rgba(250, 250, 250, 1) 100%
+  ); 
+  color: black; 
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 0.5px solid green;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.category-icons {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+  color: black; 
+  border-radius: 8px; 
+  padding: 5px; 
+}
+
+.category-item i {
+  font-size: 2em;
+}
+
+.category-item span {
+  margin-top: 5px;
+  color: black; 
+  font-weight: 600; 
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+  background-color: rgba(0, 128, 0, 0.1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+} */
+
+/* Adjustments for hero section */
+/* .hero-section {
+  margin: 300px auto 0 auto;
+  margin-top: 60px;
+  background-image: url('/img/grocery.jpg');
+  background-size: cover;
+  background-position: center right; 
+  width: 1300px;
+  height: 450px; 
+  border-radius: 30px;
+  position: relative;
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+  padding: 20px;
+  
+  opacity: 0.9; 
+  font-family: 'Quicksand', sans-serif;
+  border-top: 2px rgba(0, 0, 0, 0.1);
+} */
+
+.hero-section {
+  margin: 30px auto 0 auto; /* Center the section horizontally */
+  background-image: url('/img/grocery.jpg');
+  background-size: cover;
+  background-position: center right; /* Align image to the right */
+  width: 100%; /* Full width */
+  max-width: 1300px; /* Max width set to 1300px */
+  height: 480px; /* Increased height */
+  border-radius: 30px;
+  position: relative;
+  display: flex;
+  justify-content: flex-start; /* Align content to the left */
+  align-items: center;
+  padding: 20px;
+  opacity: 0.9; /* Adjust opacity to your liking */
+  font-family: 'Quicksand', sans-serif;
+  border-top: 2px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Ensure padding doesn't affect overall width */
+}
+
+
+
+.hero-content {
+  margin-left: 40px;
+  max-width: 60%;
+  color: white;
+  text-align: left; /* Align text to the left */
+}
+
+.hero-text {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.hero-title {
+  font-weight: 700;
+  font-size: 3em; /* Increased font size */
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.hero-subtitle {
+  font-weight: 700;
+  font-size: 1.5em;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.hero-button {
+  display: inline-block;
+  padding: 12px 24px; /* Adjusted padding */
+  background-color:  #fa4a4a;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease;
+}
+
+.hero-button:hover {
+  background-color: #03771e;
+}
+
+.slider-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+.slider-container h3 {
+  margin-bottom: 15px;
+  color: #e71010;
+}
+
+.slider h3 {
+  margin-top: 1px;
+  font-size: 1.5em;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #e71010;
+  transition: color 0.3s ease;
+}
+
+.slider-item {
+  flex: 0 0 auto;
+  margin-right: 20px;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease;
+  width: 200px;
+  text-align: center;
+}
+
+.slider-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.slider-item p {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #000;
+  transition: color 0.3s ease;
+}
+
+.slider-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.slider-item:hover img {
+  filter: brightness(85%);
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  position: relative;
+  background-color: #f8f9fa;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  color: black;
+}
+
+.navbar-left,
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left .site-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 35px;
+  color: black;
+  cursor: pointer;
+  animation: fadeIn 2s ease-in-out;
+  background: linear-gradient(45deg, #ff0000, #0000ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar-left .site-name:hover {
+  color: #289af1dd;
+  animation: bounce 1s infinite;
+}
+
+.navbar-right .nav-icon {
+  font-size: 1.5em;
+  color: rgba(67, 242, 67, 0.885);
+  margin-left: 15px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.navbar-right .nav-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.navbar-right .nav-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2em;
+  color: black;
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .search-form {
+    width: 100%;
+  }
+}
+
+.hero-section1 {
+  margin-top: 30px;
+  background-image: url('/img/grocery1.jpg');
+  background-size: cover;
+  background-position: center right; /* Align image to the right */
+  width: 97%;
+  height: 400px; /* Increased height */
+  position: relative;
+  display: flex;
+  justify-content: flex-start; /* Align content to the left */
+  align-items: center;
+  padding: 20px;
+  /* margin-top: 5px; */
+  opacity: 0.9; /* Adjust opacity to your liking */
+  font-family: 'Quicksand', sans-serif;
+  border-top: 2px rgba(0, 0, 0, 0.1);
+}
+
+.hero-content1 {
+  margin-left: 40px;
+  max-width: 60%;
+  color: white;
+  text-align: left; /* Align text to the left */
+}
+
+.hero-text1 {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.hero-title1 {
+  font-weight: 700;
+  font-size: 3em; /* Increased font size */
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.hero-subtitle1 {
+  font-weight: 700;
+  font-size: 1.5em;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.hero-button1 {
+  display: inline-block;
+  padding: 12px 24px; /* Adjusted padding */
+  background-color: rgb(248, 224, 40);
+  color: rgb(4, 2, 2);
+  text-decoration: none;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 1.2em; /* Adjusted font size */
+  transition: background-color 0.3s ease;
+}
+
+.hero-button1:hover {
+  background-color: #03771e; /* Darken the background color on hover */
+}
+.rectangle-box {
+  font-family: 'Quicksand', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 20px;
+  padding: 30px;
+  border: 2.5px solid rgb(0, 255, 183);
+  border-radius: 10px;
+  background-color: #fefefe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  transition:
+    box-shadow 0.3s,
+    border-color 0.3s,
+    border-image 0.3s;
+}
+.rectangle-box:hover {
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.2),
+    0 12px 40px rgba(0, 0, 0, 0.15); /* Intensified box-shadow */
+  border-color:
+    0 8px 16px rgba(111, 244, 251, 0.822),
+    0 12px 40px rgba(85, 250, 250, 0.813); /* Hide original border color */
+}
+
+.left-box {
+  text-align: left;
+  font-weight: 800;
+}
+
+.left-box p {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0 0 10px;
+  background: linear-gradient(to right, #46faf1, #f358f8);
+  /* Standard syntax */
+  background-clip: border-box;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.left-box button {
+  background: white;
+  border: 1.5px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(45deg, #61f7e3, #fc81f2);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  margin-left: 2px;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.left-box button a {
+  color: #1b101a;
+  text-decoration: none !important; /* Increase specificity and use !important */
+}
+.left-box button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.left-box {
+  text-align: left;
+  margin-right: 100px;
+}
+.right-box1 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  display: grid;
+  align-items: center;
+  justify-content: left;
+  border: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(45deg, #f99a42, #1b101a);
+  border-radius: 10px;
+  background-color: #fefefe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 150px; /* Adjust as needed */
+  margin-right: auto; /* Adjust as needed */
+  max-width: 400px; /* Adjust width if needed */
+}
+.right-box1 p {
+  gap: 6px;
+  font-size: 18px;
+  text-align: left;
+  align-items: center;
+  margin-left: 15px;
+  margin-top: 18px; /* Adjust as needed for top spacing */
+  margin-bottom: 18px; /* Adjust as needed for bottom spacing */
+}
+.horizontal-strip {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 0;
+  background-color: #f5f5f5;
+  border-top: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.icon-box {
+  text-align: center;
+  padding: 10px;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
+}
+
+.icon-box:hover {
+  transform: translateY(-10px);
+  color: #ff7e5f;
+}
+
+.icon-box i {
+  font-size: 24px;
+  color: #228b22;
+  margin-bottom: 5px;
+  transition: color 0.3s ease;
+}
+
+.icon-box:hover i {
+  color: #5f6fff;
+}
+
+.icon-box p {
+  margin: 0;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.icon-box:hover p {
+  color: #1e1105;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 40px 0;
+  text-align: center;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.footer-left h4,
+.footer-center h4,
+.footer-right h4 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.footer-left p,
+.footer-center ul,
+.footer-right a {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 10px 0;
+}
+
+.footer-center ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-center ul li {
+  margin-bottom: 10px;
+}
+
+.footer-center ul li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-center ul li a:hover {
+  color: #ddd;
+}
+
+.footer-right a {
+  color: #fff;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}
+
+.footer-right a:hover {
+  color: #ddd;
+}
+
+.footer-right .social-icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 10px;
+  transition: opacity 0.3s ease;
+  margin-right: 25px;
+}
+
+.footer-right .social-icon:hover {
+  opacity: 0.7;
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  border-top: 1px solid #444;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* Example CSS to style FontAwesome icons */
+.social-icons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.social-icon {
+  font-size: 24px; /* Adjust size as needed */
+  margin-right: 10px; /* Adjust spacing between icons */
+}
+
+/* Styles for specific social media icons */
+.social-icon.facebook {
+  color: #4267b2; /* Facebook blue */
+}
+
+.social-icon.youtube {
+  color: #ff0000; /* YouTube red */
+}
+
+.social-icon.instagram {
+  color: #e4405f; /* Instagram pink */
+}
+
+.social-icon.twitter {
+  color: #1da1f2; /* Twitter blue */
+}
+/* Colorful Overall Experience Review Form Styling */
+.experience-review-form {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: #e0f7fa;
+  border-radius: 12px;
+  padding: 25px;
+  max-width: 1270px; /* Adjusted max-width for better appearance */
+  margin: 30px auto;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  border: 2px solid #00796b; /* Added border for more emphasis */
+}
+
+.experience-review-form h3 {
+  font-family: 'Quicksand', sans-serif;
+  color: #004d40;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.experience-review-form label {
+  color: #004d40;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 16px;
+}
+
+.experience-review-form select,
+.experience-review-form textarea {
+  border-radius: 8px; /* Increased border-radius for a softer look */
+  padding: 14px;
+  margin-bottom: 20px;
+  width: calc(100% - 28px); /* Adjusted for padding and border */
+  font-family: 'Space Grotesk', sans-serif;
+}
+.experience-review-form button {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 8px; /* Increased border-radius for a softer look */
+  padding: 14px;
+  margin-bottom: 20px;
+  width: calc(100% - 28px); /* Adjusted for padding and border */
+  font-family: 'Space Grotesk', sans-serif;
+  transition: background-color 0.3s;
+}
+
+.experience-review-form select {
+  background-color: #ffffff;
+  border: 2px solid #4db6ac;
+  font-size: 16px;
+}
+
+.experience-review-form textarea {
+  background-color: #ffffff;
+  border: 2px solid #4db6ac;
+  resize: vertical;
+  min-height: 130px;
+  font-size: 16px;
+}
+
+.experience-review-form button {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+
+.experience-review-form button:hover {
+  background-color: #004d40;
+  transform: scale(1.05);
+}
+
+.experience-review-form button:active {
+  transform: scale(0.98);
+}
+
+.recommended-products-section {
+  font-family: 'Space Grotesk', sans-serif;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.recommended-products-box {
+  font-family: 'Space Grotesk', sans-serif;
+  width: 1270px;
+  border: 2px solid #007bff; /* Unique border color */
+  border-radius: 12px; /* Modern rounded corners */
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  background-color: #fff;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease; /* Smooth transitions */
+}
+
+.recommended-products-box:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+  transform: scale(1.02); /* Slightly enlarge on hover */
+}
+
+.recommended-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background: linear-gradient(to right, #d6fa46, #f358f8); /* Gradient colors */
+  -webkit-background-clip: text; /* Clip background to text */
+  -webkit-text-fill-color: transparent; /* Make text color transparent */
+  background-clip: text; /* Non-webkit browsers */
+  display: inline;
+}
+
+.recommended-description {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.recommended-button {
+  font-family: 'Space Grotesk', sans-serif;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+.recommended-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#cart-count {
+  position: relative;
+  top: -25px;
+  left: -60px;
+  background-color: #ff0000; /* Red background for the count */
+  color: #ffffff; /* White text color */
+  border-radius: 50%; /* Makes the badge circular */
+  width: 25px; /* Width of the badge */
+  height: 25px; /* Height of the badge */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px; /* Font size of the count */
+  font-weight: bold; /* Bold text */
+  z-index: 10; /* Ensures the badge is on top */
+  font-weight: 600;
+}
+
+#cart-count:hover {
+  transform: scale(1.2); /* Scale up the badge */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow effect */
+}
+/* Voice Search Button Styling */
+/* Ensure the map container takes full width and height */
+#map-container {
+  position: relative; /* Ensure map container positioning */
+  width: 97%; /* Full width */
+  height: 500px;
+  margin-left: 22px; /* Set a specific height */
+  border: 1px solid #ddd; /* Optional: border around the map */
+  border-radius: 8px; /* Optional: rounded corners */
+  overflow: hidden; /* Prevent overflow */
+}
+
+/* Make sure the map itself fills the container */
+#map {
+  width: 100%;
+  height: 100%;
+  position: absolute; /* Absolute positioning to fit container */
+  top: 0;
+  left: 0;
+}
+
+/* Optional: add a shadow to the map container */
+#map-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+/* Style for the custom label */
+.custom-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100px; /* Adjust width as needed */
+  height: 40px; /* Adjust height as needed */
+  font-family: Arial, sans-serif; /* Font family */
+  font-size: 14px; /* Font size */
+  color: #007bff; /* Text color */
+  font-weight: bold; /* Bold text */
+  background-color: transparent; /* No background color */
+  padding: 5px; /* Space around the text */
+  border-radius: 3px; /* Rounded corners for the label */
+}
+
+/* Style for the pin icon (if you want to use a custom icon) */
+.custom-label::before {
+  content: '';
+  position: absolute;
+  bottom: -20px; /* Position the pin below the text */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  background-image: url('path/to/your-pin-icon.svg'); /* Path to custom pin icon */
+  background-size: cover;
+}

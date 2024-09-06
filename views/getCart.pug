@@ -1,0 +1,52 @@
+
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo - Checkout
+        link(rel='stylesheet' href='/css/getcart.css')
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css')
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js')
+        script(src='/js/search.js')
+        script(src='/js/cart.js')
+        script(src='https://js.stripe.com/v3/') // Include Stripe.js library
+    body
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input#search-input.search-bar(type='text' placeholder='Search for products')
+                        button#search-button.search-button Search
+                        button#voice-search-button.search-button
+                            i(class='fa fa-microphone')
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Cart' class='nav-icon')
+                        span.nav-text Cart
+                    a(href='/myProfile')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text My Profile
+
+        main
+            h1 Your Cart
+            .cart-container
+                // Cart items will be dynamically loaded here via JavaScript
+                .cart-summary
+                    .summary-left
+                        .overall-subtotal Grand Total: PKR ${overallSubtotal.toFixed(2)}
+                        .total-discount Total Discount: PKR ${totalDiscount.toFixed(2)}
+            .buttons 
+                button(type="button" id="cash-paymnet" onclick="window.location.href='/cashPayment';") Cash Payment
+                button(type="button" id="card-payment" onclick="window.location.href='/cardPayment';") Card Payment
+

@@ -1,0 +1,84 @@
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header.header {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.payment-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-methods {
+    margin-bottom: 20px;
+}
+
+.payment-methods label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.card-payment-form, .cash-payment-form {
+    display: none;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button#checkout-form {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button#checkout-form:hover {
+    background-color: #218838;
+}
+
+button#checkout-form:focus {
+    outline: 2px solid #218838;
+    outline-offset: 2px;
+}
+
+button#checkout-form:active {
+    background-color: #1e7e34;
+    transform: scale(0.98);
+}
+
+#error-message {
+    color: #e74c3c;
+    font-size: 14px;
+}

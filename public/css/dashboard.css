@@ -1,0 +1,320 @@
+/* Body styling */
+body,
+html,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif; 
+  position: relative;
+  background-color: #f8f9fa;
+}
+
+.header {
+  width: 100%;
+  background-color: black;
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  color: black;
+}
+
+.navbar-left,
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo {
+  width: 150px;
+  height: auto;
+}
+
+/* Keyframes for the spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.navbar-left a img.nav-logo {
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease;
+}
+
+.navbar-left a:hover img.nav-logo {
+  animation: spin 0.6s; /* Apply the spin animation */
+  transform: scale(1.1); /* Slightly increase the size */
+  filter: brightness(1.2) contrast(1.2) saturate(1.5); /* Adjust color on hover */
+}
+
+.navbar-center {
+  margin-right: 190px;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.navbar-right .nav-icon {
+  font-size: 1.5em;
+  color: rgba(67, 242, 67, 0.885);
+  margin-left: 15px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.navbar-right .nav-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.navbar-right .nav-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2em;
+  color: black;
+}
+
+/* Dashboard Styling */
+.dashboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 100px);
+  background: linear-gradient(
+    135deg,
+    #ff9a9e,
+    #fad0c4
+  ); /* Soft gradient background */
+}
+
+/* Card Styling */
+.card {
+  background: #ffffff; /* Clean white background */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  border: 2px solid #ff9a9e; /* Border with gradient color */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative Triangle */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-left: 150px solid transparent;
+  border-bottom: 150px solid rgba(255, 154, 154, 0.2);
+  z-index: 0;
+}
+
+/* Heading Styling */
+.card h1 {
+  font-size: 2.5em;
+  color: #333333; /* Dark grey text */
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+h1:hover {
+  background: linear-gradient(45deg, #ff7e5f, #feb47b); /* Gradient text */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Button Container */
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Button Row */
+.button-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Button Styling */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #6cff5f; /* Vibrant orange background */
+  border: none;
+  padding: 12px 24px;
+  margin: 5px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: black; /* White text */
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+  width: calc(50% - 20px);
+}
+
+.btn:hover {
+  background: #b8fe7b; /* Light orange on hover */
+  transform: scale(1.05); /* Slight scaling effect */
+}
+
+.btn-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.btn span {
+  font-family: 'Space Grotesk', sans-serif; 
+  font-weight: 800;
+  font-size: 1.3em;
+}
+
+/* 
+.dashboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 100px);
+  
+  background-size: cover;
+}
+
+.card {
+  background: rgba(0, 0, 0, 0.8); 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+  text-align: center;
+  background-image: url('/img/card.jpg'); 
+  background-size: cover;
+} 
+
+
+
+
+.card h1 {
+  font-size: 2em;
+  color: rgb(0, 0, 0);
+  margin-bottom: 20px;
+}
+
+h1:hover {
+  background: linear-gradient(45deg, #ff0000, #0000ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: lightgrey;
+  border: 1px solid green;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+  width: calc(50% - 20px);
+}
+
+.btn:hover {
+  background: white;
+}
+
+.btn-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.btn span {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1.4em;
+  color: black; 
+} */
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}

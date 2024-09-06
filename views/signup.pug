@@ -1,0 +1,128 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Sign Up - GroceryGo
+    link(rel='stylesheet' href='/css/signup.css')
+    link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+
+  body
+    .signup-container
+      form#signupForm(action='/api/v1/users/signup' method='POST' autocomplete='off')
+        h2 Sign Up
+        .form-group
+          input(type='text' id='name' name='name' placeholder='Name', required, autocomplete='new-password')
+          span.error-message#name-error
+        .form-group
+          input(type='email' id='email' name='email' placeholder='Email', required, autocomplete='new-password')
+          span.error-message#email-error
+        .form-group
+          input(type='password' id='password' name='password' placeholder='Password', required, autocomplete='new-password')
+          span.error-message#password-error
+        .form-group
+          input(type='password' id='confirmPassword' name='confirmPassword' placeholder='Confirm Password', required, autocomplete='new-password')
+          span.error-message#confirmPassword-error
+        button(type='submit') Sign Up
+        p Already have an account?
+          a(href='/login') Log In
+
+    script.
+      function validateName() {
+        const name = document.getElementById('name').value;
+        const namePattern = /^[A-Za-z\s]+$/;
+        const nameError = document.getElementById('name-error');
+        if (!name) {
+          nameError.innerText = 'Name is required';
+          return false;
+        } else if (!namePattern.test(name)) {
+          nameError.innerText = 'Name can only contain letters and spaces';
+          return false;
+        } else {
+          nameError.innerText = '';
+          return true;
+        }
+      }
+
+      function validateEmail() {
+        const email = document.getElementById('email').value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailError = document.getElementById('email-error');
+        if (!email) {
+          emailError.innerText = 'Email is required';
+          return false;
+        } else if (!emailPattern.test(email)) {
+          emailError.innerText = 'Please enter a valid email address';
+          return false;
+        } else {
+          emailError.innerText = '';
+          return true;
+        }
+      }
+
+      function validatePassword() {
+        const password = document.getElementById('password').value;
+        const passwordError = document.getElementById('password-error');
+        if (!password) {
+          passwordError.innerText = 'Password is required';
+          return false;
+        } else if (password.length < 8) {
+          passwordError.innerText = 'Password must be at least 8 characters long';
+          return false;
+        } else {
+          passwordError.innerText = '';
+          return true;
+        }
+      }
+
+      function validateConfirmPassword() {
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const password = document.getElementById('password').value;
+        const confirmPasswordError = document.getElementById('confirmPassword-error');
+        if (!confirmPassword) {
+          confirmPasswordError.innerText = 'Confirm Password is required';
+          return false;
+        } else if (confirmPassword !== password) {
+          confirmPasswordError.innerText = 'Passwords do not match';
+          return false;
+        } else {
+          confirmPasswordError.innerText = '';
+          return true;
+        }
+      }
+
+      $(document).ready(function() {
+        $('#name').on('input', validateName);
+        $('#email').on('input', validateEmail);
+        $('#password').on('input', validatePassword);
+        $('#confirmPassword').on('input', validateConfirmPassword);
+
+        $('#signupForm').on('submit', function(event) {
+          event.preventDefault(); 
+
+          const isNameValid = validateName();
+          const isEmailValid = validateEmail();
+          const isPasswordValid = validatePassword();
+          const isConfirmPasswordValid = validateConfirmPassword();
+
+          if (isNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid) {
+            $.ajax({
+              url: '/api/v1/users/signup',
+              type: 'POST',
+              data: $(this).serialize(),
+              success: function(response) {
+                if (response.status === 'success') {
+                  window.location.href = '/login?message=Signup successful. Please log in.';
+                }
+              },
+              error: function(xhr) {
+                // Handle error
+                alert('Signup failed. Please try again.');
+              }
+            });
+          }
+        });
+      });

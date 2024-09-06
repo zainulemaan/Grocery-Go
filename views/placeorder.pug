@@ -1,0 +1,63 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title Payment - GroceryGo
+        link(rel='stylesheet' href='/css/payment.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://js.stripe.com/v3/')
+        script(src='/js/orderroute.js')
+    body
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    h1 Payment
+                .navbar-right
+                    a(href='/myProfile')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text My Profile
+
+        main
+            .payment-container
+                .payment-methods
+                    label
+                        input(type='radio' name='paymentMethod' id='paymentMethodCash' value='cash') Cash on Delivery
+                    label
+                        input(type='radio' name='paymentMethod' id='paymentMethodCard' value='card') Pay with Card
+
+                .card-payment-form(style='display: none;') // Hide initially
+                    .form-group
+                        label(for='card-element') Credit Card
+                        #card-element
+
+                    .form-group
+                        label(for='cardPhoneNumber') Phone Number
+                        input(type='text' id='cardPhoneNumber' placeholder='Enter your phone number')
+                        span#error-message#cardPhoneNumber-error Phone number is invalid
+
+                    .form-group
+                        label(for='cardAddress') Address
+                        input(type='text' id='cardAddress' placeholder='Enter your address')
+                        span#error-message#cardAddress-error Address is required
+                    
+                    button(type='submit' id='card-checkout-form') Place Order
+
+                .cash-payment-form(style='display: none;') // Hide initially
+                    .form-group
+                        label(for='cashPhoneNumber') Phone Number
+                        input(type='text' id='cashPhoneNumber' placeholder='Enter your phone number')
+                        span#error-message#cashPhoneNumber-error Phone number is invalid
+
+                    .form-group
+                        label(for='cashAddress') Address
+                        input(type='text' id='cashAddress' placeholder='Enter your address')
+                        span#error-message#cashAddress-error Address is required
+                    
+                    button(type='submit' id='cash-checkout-form') Place Order
+
+            #error-message(style='display: none;')

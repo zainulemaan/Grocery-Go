@@ -1,0 +1,93 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo - Delivery Info
+        link(rel='stylesheet' href='/css/deliveryinfo.css') 
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet")
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+        script(src='/js/search.js')
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input#search-input.search-bar(type='text' placeholder='Search for products')
+                        button#search-button.search-button Search
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Wishlist' class='nav-icon')
+                        span.nav-text Cart
+                    a(href='/signup')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text Sign Up
+
+        main
+            .container
+                h2 Delivery & Shipping Information
+
+                h3 Karachi Including Bahria Town & Adjoining Areas
+                h4 Standard Shipping
+                p Delivery Time: 24-48 Hours
+                p Delivery Charges: Rs. 225 per order
+
+                h4 Express Shipping
+                p Delivery Time: Same-day for orders placed between 9:00 am to 5:00 pm
+                p Delivery Charges: Rs. 349 per order
+
+                h4 Road-Side Pickup
+                p Delivery Time: Within 2 working days for orders placed between 10:00 am to 8:00 pm
+                p Delivery Charges: FREE
+                p Payment Mode: Pre-Paid Orders Only
+
+                h3 Lahore, Islamabad & Peshawar
+                p Delivery time: 2-4 working days
+                p For Orders Under 5KG: Rs. 249 per order
+                p For Orders Over 5 KG: Rs. 249 per order + Rs 75 per extra KG
+
+                h3 Other Cities (All over Pakistan)
+                p Delivery time: 3-5 working days
+                p For Orders Under 5KG: Rs. 249 per order
+                p For Orders Over 5 KG: Rs. 249 per order + Rs 75 per extra KG
+
+        footer.footer
+            .footer-container
+                .footer-left
+                    h4 Contact Details
+                    p Address: 123 Grocery St, Freshville, FG 12345
+                    p Phone: (123) 456-7890
+                    p Email: contact@grocerygo.com
+                .footer-center
+                    h4 Customer Services
+                    ul
+                        li
+                            a(href='/contactus') Contact Us
+                        li
+                            a(href='/deliveryinfo') Delivery Info
+                        li
+                            a(href='/faq') FAQs
+                .footer-right
+                    h4 Connect with Us
+                    .social-icons
+                        a(href='#')
+                            i.fab.fa-facebook-f.social-icon(style="color: #4267B2")
+                        a(href='#')
+                            i.fab.fa-youtube.social-icon(style="color: #FF0000")
+                        a(href='#')
+                            i.fab.fa-instagram.social-icon(style="color: #E4405F")
+                        a(href='#')
+                            i.fab.fa-twitter.social-icon(style="color: #1DA1F2")
+            .footer-bottom
+                p © 2024 GroceryGo. All rights reserved.

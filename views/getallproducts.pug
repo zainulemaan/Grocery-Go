@@ -1,0 +1,106 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title All Products
+        link(rel='stylesheet' href='/css/getallproducts.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet") 
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script.
+            $(document).ready(function() {
+
+                function fetchProducts() {
+                    $.ajax({
+                        url: '/api/v1/products',
+                        type: 'GET',
+                        success: function(response) {
+                            var products = response.data.products; 
+                            displayProducts(products);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Failed to fetch products:', error);
+                        }
+                    });
+                }
+
+                function displayProducts(products) {
+                    var productsContainer = $('#productsContainer');
+                    productsContainer.empty();
+
+                    products.forEach(function(product) {
+                        var productHTML = `
+                            <div class="product-card" data-id="${product._id}">
+                                <div class="product-image">
+                                    <img src="/img/products/${product.photo}" alt="${product.name}">
+                                </div>
+                                <div class="product-details">
+                                    <h3>${product.name}</h3>
+                                    <div class="price">
+                                        <span class="original-price">PKR ${product.price}</span>
+                                        <span class="discounted-price">PKR ${calculateDiscountedPrice(product.price, product.discountPercentage)}</span>
+                                        <span class="discounted-price">Quantity: ${product.quantityAvailable}</span>
+                                    </div>
+                                    <a href="/update?id=${product._id}" class="update-product-btn">Update Product</a>
+                                    <button class="delete-product-btn" data-id="${product._id}">
+                                        <img src="/img/delete.png" alt="Delete">
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        productsContainer.append(productHTML);
+                    });
+
+                    //  click event handler to delete buttons using event delegation
+                    productsContainer.on('click', '.delete-product-btn', function() {
+                        var productId = $(this).data('id');
+                        var productCard = $(this).closest('.product-card');
+                        deleteProduct(productId, productCard);
+                    });
+                }
+
+                function calculateDiscountedPrice(price, discountPercentage) {
+                    return price * (1 - discountPercentage / 100);
+                }
+
+                function deleteProduct(productId, productCard) {
+                    $.ajax({
+                        url: '/api/v1/products/' + productId,
+                        type: 'DELETE',
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                // Remove the product card from the DOM
+                                productCard.remove();
+                            } else {
+                                console.error('Failed to delete product:', response.message);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Failed to delete product:', error);
+                        }
+                    });
+                }
+
+                fetchProducts();
+            });
+
+    body
+        // Header
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-right
+                    a.button(href='/dashboard') Dashboard
+                    a.button(href='/addProducts') Add Products
+
+        // Products Container
+        .products-container#productsContainer
+            // Products will be dynamically added here via JavaScript
+
+
+

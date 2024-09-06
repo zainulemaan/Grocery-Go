@@ -1,0 +1,6 @@
+2024/09/06-02:46:55.518 2d9c Reusing MANIFEST C:\Users\HP\Desktop\GroceryGo\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2024/09/06-02:46:55.521 2d9c Recovering log #120
+2024/09/06-02:46:55.523 2d9c Reusing old log C:\Users\HP\Desktop\GroceryGo\.wwebjs_auth\session\Default\Local Storage\leveldb/000120.log 
+2024/09/06-02:48:04.948 3ff4 Level-0 table #124: started
+2024/09/06-02:48:04.992 3ff4 Level-0 table #124: 13687 bytes OK
+2024/09/06-02:48:05.007 3ff4 Delete type=0 #120

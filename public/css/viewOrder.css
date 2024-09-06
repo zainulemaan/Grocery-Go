@@ -1,0 +1,95 @@
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+header.header {
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-left .nav-logo {
+  height: 50px;
+}
+
+.navbar-center .search-form {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  border: 2px solid #006400; /* Dark Green */
+  padding: 5px;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.search-button {
+  background-color: #006400; /* Dark Green */
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #004d00; /* Darker Green */
+}
+
+.navbar-right .nav-icon {
+  height: 30px;
+}
+
+.nav-text {
+  margin-left: 5px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+.order-details-card {
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.order-card {
+  margin-bottom: 20px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+p {
+  margin: 5px 0;
+}
+
+.toast-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #ff8a00, #e52e71);
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  display: none;
+  z-index: 1000;
+}
+
+.toast-message.show {
+  display: block;
+}

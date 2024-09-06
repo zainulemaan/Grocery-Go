@@ -1,0 +1,116 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo - View Orders
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(rel='stylesheet' href='/css/vieworder.css') 
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js') 
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+
+    body
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input.search-bar(type='text' placeholder='Search for products')
+                        button.search-button Search
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Cart' class='nav-icon')
+                        span.nav-text Cart
+                    a(href='/signup')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text Sign Up
+
+        .container
+            h1 Order Details
+            // This container will be populated with order details via AJAX
+            #order-details
+
+        // Toast message for order confirmation
+        .toast-message#toast
+            p Your order details are displayed above.
+
+        // Inline JS for Toast and AJAX
+        script.
+            $(document).ready(function() {
+                function showToast(message) {
+                    const toast = $('#toast');
+                    toast.find('p').text(message);
+                    toast.addClass('show');
+
+                    // Keep the toast visible for a short time
+                    setTimeout(() => {
+                        toast.removeClass('show');
+                    }, 5000); 
+                }
+
+                // Show the toast message on page load
+                showToast('Your order details are displayed above.');
+
+                // Fetch orders data and display
+                function fetchOrders() {
+                    const token = getCookie('jwt');
+                    if (token) {
+                        try {
+                            const decoded = jwt_decode(token);
+                            const userId = decoded.id;
+                            $.ajax({
+                                url: `/api/v1/orders/${userId}`,
+                                method: 'GET',
+                                success: function(response) {
+                                    const orders = response.orders; // Adjust according to your API response
+                                    if (orders && orders.length > 0) {
+                                        let orderHTML = '';
+                                        orders.forEach(order => {
+                                            orderHTML += `
+                                                <div class="order-card">
+                                                    <h2>Order ID: ${order._id}</h2>
+                                                    <p>Address: ${order.address}</p>
+                                                    <p>Payment Method: ${order.paymentMethod}</p>
+                                                    <p>Created At: ${new Date(order.createdAt).toLocaleString()}</p>
+                                                    <p>Subtotal: $${order.subTotal.toFixed(2)}</p>
+                                                    <h3>Items:</h3>
+                                                    <ul>`;
+                                            order.items.forEach(item => {
+                                                orderHTML += `<li>${item.productName} - ${item.productQuantity} x $${item.productPrice.toFixed(2)} (Discount: ${item.discountPercentage}%)</li>`;
+                                            });
+                                            orderHTML += `</ul></div>`;
+                                        });
+                                        $('#order-details').html(orderHTML);
+                                    } else {
+                                        $('#order-details').html('<p>No orders found.</p>');
+                                    }
+                                },
+                                error: function(xhr) {
+                                    console.error('Failed to fetch order details:', xhr.responseText);
+                                    $('#order-details').html('<p>Failed to load order details. Please try again later.</p>');
+                                }
+                            });
+                        } catch (e) {
+                            console.error('Failed to decode JWT:', e);
+                            $('#order-details').html('<p>Failed to decode JWT. Please log in again.</p>');
+                        }
+                    } else {
+                        console.error('No token found');
+                        $('#order-details').html('<p>No token found. Please log in.</p>');
+                    }
+                }
+
+                // Fetch orders when the page loads
+                fetchOrders();
+            });
+
+            // Helper function to get a cookie by name
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            }

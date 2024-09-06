@@ -1,0 +1,52 @@
+
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title GroceryGo - Checkout
+        link(rel='stylesheet' href='/css/cash.css')
+        link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css')
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js')
+        script(src='/js/search.js')
+        script(src='/js/cart.js')
+        script(src='/js/cashpayment.js') 
+        script(src='https://js.stripe.com/v3/') // Include Stripe.js library
+    body
+        header.header
+            nav.navbar
+                .navbar-left
+                    a(href='/')
+                        img.nav-logo(src='/img/grocerygo.png' alt='GroceryGo Logo')
+                .navbar-center
+                    form.search-form
+                        input#search-input.search-bar(type='text' placeholder='Search for products')
+                        button#search-button.search-button Search
+                        button#voice-search-button.search-button
+                            i(class='fa fa-microphone')
+                .navbar-right
+                    a(href='/getCart')
+                        img.nav-icon(src='/img/wishlist.png' alt='Cart' class='nav-icon')
+                        span.nav-text Cart
+                    a(href='/myProfile')
+                        img.nav-icon(src='/img/profile.png' alt='Profile' class='nav-icon')
+                        span.nav-text My Profile
+            .checkout-form-cash
+                form(method='POST' action='/api/v1/order/${userId}/cashondelivery' id='checkout-form-cash')
+                    .form-group
+                        label(for='phoneNumber') Phone Number
+                        input(type='text' id='phoneNumber' name='phoneNumber' placeholder='+92XXXXXXXXXX' required)
+                        p#phone-error.form-error(style='display: none;') Invalid phone number format. Correct format e.g: +923249754112.
+                    .form-group
+                        label(for='address') Shipping Address
+                        input(type='text' id='address' name='address' placeholder='123 Main St, Karachi, Sindh, 74200' required)
+                        p#address-error.form-error(style='display: none;') Invalid Address. Please enter address like this e.g: 123 Main St, Karachi, Sindh, 74200
+                    .form-footer
+                        button(type='submit') Place Order
